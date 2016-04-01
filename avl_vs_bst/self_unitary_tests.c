@@ -40,5 +40,5 @@ int test_sort_a_number(){
     array[0] = 17;
     if (sort_a_number(array,1)==17)
         return (1);
-    return 0;
+    return (0);
 }
