@@ -3,6 +3,8 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "global.h" /* constantes e funções globais */
 
 
@@ -30,13 +32,21 @@ bool argument_is_set(int args_count, char *args[], char arg) {
 	return FALSE; /* o argumento não foi encontrado */
 }
 
+/* recebe um caracter e retorna ERROR se não for um dígito numérico ou sua re-
+ * presentação decimal, caso seja um dígito numérico. */
+int char_to_int(char character) {
+	/* se o caracter não estiver no intervalo de dígitos numéricos: ERROR */
+	if (character < '0' || character > '9' ) 
+		return ERROR; /* não é um dígito numérico */
+	return (character-'0'); /* retorna o dígito numérico */
+}
 
 /* Recebe o número de argumentos, a lista de strings com os argumentos
  * e qual o argumento desejado;
  * Retorna o valor inteiro o argumento desejado, ou ERROR caso o valor não
  * seja encontrado */
 int get_argument_value(int args_count, char *args[], char arg) {
-	
+	int i; /* indíce para laço */
 	int index_arg_value_str = ZERO; /* indíce para adicionar valor à string */
 	int arg_value; /* receberá o inteiro do valor do argumento */
 	char arg_value_str[MAX_VALUE_LENGTH]; /* string para valor do argumento */
@@ -52,7 +62,7 @@ int get_argument_value(int args_count, char *args[], char arg) {
 	if (args[arg_pos][ZERO] == ARG_SYMBOL && args[i][1] == arg) {
 		
 		/* salvar o valor em uma string, caso esteja concatenado */
-		while (atoi(args[i][(index_arg_value_str+2)])) != ZERO) {
+		while (char_to_int(args[i][(index_arg_value_str+2)]) != ERROR) {
 			arg_value_str[index_arg_value_str] =
 				args[i][(index_arg_value_str+2)];
 			index_arg_value_str++;
@@ -62,7 +72,9 @@ int get_argument_value(int args_count, char *args[], char arg) {
 		 * to, o valor deve estar no próximo argumento */
 		if (index_arg_value_str == ZERO) {
 			/* salvar o valor em uma string */
-			while (atoi(args[(arg_pos+1)][index_arg_value_str]) != ZERO) {
+			while (char_to_int(args[(arg_pos+1)][index_arg_value_str]) !=
+				ERROR) {
+
 				arg_value_str[index_arg_value_str] = 
 					args[(arg_pos+1)][index_arg_value_str];
 				index_arg_value_str++;
