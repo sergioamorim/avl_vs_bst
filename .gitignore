@@ -27,6 +27,12 @@
 *.i*86
 *.x86_64
 *.hex
+*.b
 
 # Debug files
 *.dSYM/
+
+# Input and output files (testing)
+*.e
+*.s
+*.o
