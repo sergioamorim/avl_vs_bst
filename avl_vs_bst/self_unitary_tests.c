@@ -1,4 +1,6 @@
-/* Este programa realiza testes unitários nas funções do projeto avl_vs_bst */
+/* Este programa realiza testes unitários nas funções do projeto avl_vs_bst 
+ * PARA TESTAR AS FUNÇÕES DE MANIPULAÇÃO DE ARGUMENTOS, É NECESSÁRIO INICIAR
+ * COM OS PARÂMETROS -n17 -s 17 -tuj17v p17 */
 
 
 #include <stdio.h>
@@ -17,14 +19,16 @@ bool test_sort_a_number(); /* testa a função sort_a_number */
 
 
 /* Funções da biblioteca arguments.h */
-bool test_argument_is_set();
-bool test_get_argument_value();
+bool test_argument_is_set(int args_count, char *args[]);
+bool test_get_argument_value(int args_count, char *args[]);
 
 
 /* Para cada função testada o prograva deve exibir o nome da função e OK se
- * ela passar no teste ou FAIL caso o resultado não seja o esperado. 
+ * ela passar no teste ou FAIL caso o resultado não seja o esperado.
+ * PARA TESTAR AS FUNÇÕES DE MANIPULAÇÃO DE AGUMENTOS É NECESSÁRIO INICIAR
+ * COM OS PARÂMETROS -n17 -s 17 -tuj17v p17
  */
-void main () {
+void main (int args_count, char *args[]) {
     
     /* imprimir OK se a função random_interger estiver funcionando */
     printf("random_interger function\t\t");
@@ -40,19 +44,19 @@ void main () {
     else
         printf("FAIL\n");
 
-    /* imprimir OK se a função sort_a_number estiver funcionando */
+    /* imprimir OK se a função argument_is_set estiver funcionando */
     printf("argument_is_set function\t\t");
-    if (test_argument_is_set() != FALSE)
+    if (test_argument_is_set(args_count, args) != FALSE)
         printf("OK\n");
     else
-        printf("FAIL\n");
+        printf("FAIL if initialized with -n17 -s 17 -tuj17v p17\n");
 
-    /* imprimir OK se a função sort_a_number estiver funcionando */
+    /* imprimir OK se a função get_argument_value estiver funcionando */
     printf("get_argument_value function\t\t");
-    if (get_argument_value() != FALSE)
+    if (test_get_argument_value(args_count, args) != FALSE)
         printf("OK\n");
     else
-        printf("FAIL\n");
+        printf("FAIL if initialized with -n17 -s 17 -tuj17v p17\n");
 
 }
 
@@ -78,32 +82,21 @@ bool test_sort_a_number(){
 
 
 /* Se os resultados da função argument_is_set estiverem corretos para os
- * testes aplicados, retorna TRUE; se não, retorna FALSE */
-bool test_argument_is_set() {
-
-    /* declarar argumentos fictícios */
-    int args_count = 6;
-    char args[14][args_count];
-
-    /* setar argumentos fictícios */
-    strcpy (args[ZERO], "./program.out");
-    strcpy (args[1], "-n17");
-    strcpy (args[2], "-s");
-    strcpy (args[3], "17");
-    strcpy (args[4], "-aiu");
-    strcpy (args[5], "p 17");
+ * testes aplicados, retorna TRUE; se não, retorna FALSE
+ * PARA TESTAR É NECESSÁRIO INICIAR COM OS PARÂMETROS -n17 -s 17 -tuj17v p17*/
+bool test_argument_is_set(int args_count, char *args[]) {
 
     /* testar se a função está funcionando para os argumentos fictícios;
      * retornar FALSE caso não esteja */
+    if (argument_is_set(args_count, args, 'n') != 1)
+        return FALSE;
     if (argument_is_set(args_count, args, 's') != 2)
         return FALSE;
     if (argument_is_set(args_count, args, 'o') != FALSE)
         return FALSE;
-    if (argument_is_set(args_count, args, 'n') != 1)
+    if (argument_is_set(args_count, args, 'u') != 4)
         return FALSE;
-    if (argument_is_set(args_count, args, 'i') != 4)
-        return FALSE;
-    if (argument_is_set(args_count, args, 'p') != FALSE)
+    if (argument_is_set(args_count, args, 'a') != FALSE)
         return FALSE;
 
 
@@ -112,20 +105,9 @@ bool test_argument_is_set() {
 
 
 /* Se os resultados da função get_argument_value estiverem corretos para os
- * testes aplicados, retorna TRUE; se não, retorna FALSE */
-bool test_get_argument_value() {
-
-    /* declarar argumentos fictícios */
-    int args_count = 6;
-    char args[14][args_count];
-
-    /* setar argumentos fictícios */
-    strcpy (args[ZERO], "./program.out");
-    strcpy (args[1], "-n17");
-    strcpy (args[2], "-s");
-    strcpy (args[3], "17");
-    strcpy (args[4], "-tuj17v")
-    strcpy (args[5], "p 17");
+ * testes aplicados, retorna TRUE; se não, retorna FALSE 
+ * PARA TESTAR É NECESSÁRIO INICIAR COM OS PARÂMETROS -n17 -s 17 -tuj17v p17*/
+bool test_get_argument_value(int args_count, char *args[]) {
 
     /* testar se a função está funcionando para os argumentos fictícios;
      * retornar FALSE caso não esteja */
