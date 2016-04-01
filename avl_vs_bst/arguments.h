@@ -52,7 +52,7 @@ int get_argument_value(int args_count, char *args[], char arg) {
 	if (args[arg_pos][ZERO] == ARG_SYMBOL && args[i][1] == arg) {
 		
 		/* salvar o valor em uma string, caso esteja concatenado */
-		while (atoi(args[i][(index_arg_value_str+2])) != ZERO) {
+		while (atoi(args[i][(index_arg_value_str+2)])) != ZERO) {
 			arg_value_str[index_arg_value_str] =
 				args[i][(index_arg_value_str+2)];
 			index_arg_value_str++;
