@@ -13,3 +13,6 @@ typedef int bool;
 
 /* Constante de erro padrão */
 #define ERROR (-1)
+
+/* Constante de caracter nulo */
+#define NULL_CHAR ('\0')
