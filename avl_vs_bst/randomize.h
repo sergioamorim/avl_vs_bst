@@ -4,7 +4,7 @@
 
 /* Retorna um inteiro aleatório, respeitando um número mínimo e um número má-
  * ximo, recebidos pela função. */
-int random_interger(int min, int max){
+int random_integer(int min, int max){
     return ((rand()%(max-min+1))+min);
 }
 
