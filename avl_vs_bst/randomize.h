@@ -12,6 +12,6 @@ int random_integer(int min, int max){
  * Deve receber um array completamente preenchido e o tamanho do array. */
 int sort_a_number(int *array, int array_size){
 	/* sorteia uma posição do array, depois retorna o inteiro dessa posição */
-	int random_position = random_interger(ZERO, (array_size-1));
+	int random_position = random_integer(ZERO, (array_size-1));
     return (array[random_position]);
 }
