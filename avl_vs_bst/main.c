@@ -13,11 +13,13 @@
  * -n QUANTITY_OF_NUMBERS
  *		quantidade de números que serão incluídos em ambas as estruturas de
  *		dados (padrão: 10000 | obs: o número -1 não deve ser usado; deve ser
- *		maior que a quantidade de números a serem sorteados)
+ *		maior que a quantidade de números a serem sorteados; deve ser um valor
+ *		positivo)
  * -s QUANTITY_OF_SORTS
  *		quantidade de números a serem sorteados para serem buscados em ambas
  *		as estruturas (padrão: 1000 | obs: o número -1 não deve ser usado;
- *		deve ser menor que a quantidade de números)
+ *		deve ser menor que a quantidade de números; deve ser um valor positi-
+ *		vo)
  * -a MAX_NUMBER
  *		número máximo que pode ser sorteado e incluído nas estruturas (padrão:
  *		999999 | obs: os números -1 e o inteiro máximo não devem ser usados)
@@ -37,8 +39,8 @@
  * setado */
 #define DEFAULT_QUANTITY_OF_NUMBERS (10000)
 #define DEFAULT_QUANTITY_OF_SORTS (1000)
-#define DEFAULT_MAX_NUMBER (999999)
-#define DEFAULT_MIN_NUMBER (-99999)
+#define DEFAULT_MAX_NUMBER (9999999)
+#define DEFAULT_MIN_NUMBER (-999999)
 
 
 /* exibe instruções de uso do programa e informações sobre o funcionamento */
@@ -55,7 +57,15 @@ int main (int args_count, char *args[]) {
 	int quantity_of_sorts; /* quantidade de números para buscar nas árvores */
 	int max_number, min_number; /* limites mínimo e máximo dos números */
 	int sorted_number; /* guardará temporariamente o número gerado/sorteado */
+	int current_array_size; /* tamanho do array para sortear os números */
 	int i; /* será usado como índice para laços */
+
+	/* Os arrays abaixo serão declarados tão logo quanto as variáveis que de-
+	 * finem seus tamanhos forem setadas:
+	 *	int quantity_of_comparisons_avl[quantity_of_sorts]
+	 *	int quantity_of_comparisons_bst[quantity_of_sorts]
+	 *	int numbers_array[quantity_of_numbers]
+	 */
 
 	/* se o argumento de ajuda foi passado, exibir instruções e finalizar */
 	if (argument_is_set(args_count, args, 'h')) {
@@ -81,6 +91,14 @@ int main (int args_count, char *args[]) {
 	min_number = get_argument_value(args_count, args, 'i');
 	if (min_number == ERROR)
 		min_number = DEFAULT_MIN_NUMBER;
+
+	/* se alguma das quantidades for negativa, exibe uma mensagem de erro,
+	 * exibe as instruções de uso e encerra o programa */
+	if (quantity_of_sorts < ZERO || quantity_of_numbers < ZERO) {
+		printf("ERRO: quantidades devem ser positivas.\n\n");
+		print_help(args[ZERO]); /* exibir instruções */
+		return (ERROR); /* interromper programa */
+	}
 
 	/* se a quantidade de números a serem sorteados for maior que a quantidade
 	 * de números, exibe uma mensagem de erro, as instruções de uso e encerra
@@ -138,13 +156,13 @@ apassar a quanti-\n\tdade de números\n\n");
 			= search_on_binary_tree(bst, sorted_number);
 	}
 	
-
+	
 	/* plotar gráfico com os valores contidos nos arrays
 	 * quantity_of_comparisons_avl e quantity_of_comparisons_bst relacionados
 	 * com a posição de cada valor */
+	 
 
-
-	return (ZERO); /* programa executado com sucesso */
+	return (ZERO); /* programa executado coma sucesso */
 
 }
 
@@ -171,11 +189,12 @@ L e uma\nárvore de busca binária. Depois, sorteia dentre os números incluído
 	printf("  -n QUANTITY_OF_NUMBERS\n\t\tquantidade de números que serão inc\
 luídos em ambas as estru-\n\t\tturas de dados (padrão: 10000 | obs: o número \
 -1 não deve ser\n\t\tusado; deve ser maior que a quantidade de números a sere\
-m sor-\n\t\tteados)");
+m sor-\n\t\tteados; deve ser um valor positivo)");
 	printf("\n");
 	printf("  -s QUANTITY_OF_SORTS\n\t\tquantidade de números a serem sortead\
 os para serem buscados em\n\t\tambas as estruturas (padrão: 1000 | obs: o núm\
-ero -1 não deve\n\t\tser usado; deve ser menor que a quantidade de números)");
+ero -1 não deve\n\t\tser usado; deve ser menor que a quantidade de números; d\
+eve ser\n\t\tum valor positivo)");
 	printf("\n");
 	printf("  -a MAX_NUMBER\n\t\tnúmero máximo que pode ser sorteado e incluí\
 do nas estruturas\n\t\t(padrão: 999999 | obs: os números -1 e o inteiro máxim\

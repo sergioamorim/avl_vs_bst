@@ -2,7 +2,7 @@
 
 
 #include <stdlib.h> /* malloc */
-#inlcude "global.h" /* constantes e funções globais do projeto */
+#include "global.h" /* constantes e funções globais do projeto */
 
 
 /* estrutura de uma árvore binária em que cada nó guarda um inteiro */
@@ -244,18 +244,24 @@ binary_tree_t *balance_binary_tree(binary_tree_t *avl) {
 /* busca um número em uma árvore binária e retorna a quantidade de comparações
  * realizadas para encontrar esse número */
 int search_on_binary_tree(binary_tree_t *binary_tree, int value){
-	/* se o nó é vazio, uma comparação foi feita */
+	/* se o nó é vazio, nenhuma comparação será feita */
 	if (is_empty_binary_tree(binary_tree))
-		return (1);
+		return (ZERO);
 	/* se valor pertence ao nó, uma comparação foi feita */
 	if (binary_tree->value == value)
 		return (1);
 	/* se o valor não pertence ao nó e é maior que o valor do nó, procurar
 	 *	à direita, incrementando o valor a ser retornado */
-	if (value > binary_tree->value) {
+	if (value > binary_tree->value
+		&& !is_empty_binary_tree(binary_tree->right)) {
+		
 		return (search_on_binary_tree(binary_tree->right, value) + 1);
 	}
 	/* se o valor não pertence ao nó e não é maior que o valor do nó, procurar
 	 *	à direita, incrementando o valor a ser retornado */
-	return (search_on_binary_tree(binary_tree->left, value) + 1);
+	if (!is_empty_binary_tree(binary_tree->right)){
+		return (search_on_binary_tree(binary_tree->left, value) + 1);
+	}
+
+	return (0);
 }
