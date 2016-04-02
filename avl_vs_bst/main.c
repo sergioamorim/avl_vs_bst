@@ -3,8 +3,8 @@
  *
  * Inclui uma números aleatórios em duas estruturas de dados: uma AVL e uma
  * árvore de busca binária. Depois, sorteia dentre os números incluídos,
- * números a serem buscados em ambas as estruturas. Para cada busca, o númerode
- * comparações necessárias para encontrar o número é contado e servirá para
+ * números a serem buscados em ambas as estruturas. Para cada busca, o número
+ * de comparações necessárias para encontrar o número é contado e servirá para
  * plotar um gráfico que relaciona a quantidade de comparações necessárias com
  * a quantidade de números buscados.
  *
@@ -31,7 +31,7 @@
 #include "global.h" /* constantes e funções globais */
 #include "arguments.h" /* funções para tratar argumentos */
 #include "randomize.h" /* funções para randomização de números */
-
+#include "trees.h" /*estruturas e funções de AVL e árvores de busca binária */
 
 /* valores padrão para as variáveis do programa, caso algum argumento não seja
  * setado */
@@ -47,6 +47,10 @@ void print_help(char *self_name);
 
 int main (int args_count, char *args[]) {
 	
+	/* AVL que será comparada à árvore de busca binária */
+	binary_tree_t *avl = create_empty_binary_tree();
+	/* árvore de busca binária que será comparada à AVL */
+	binary_tree_t *bst = create_empty_binary_tree();
 	int quantity_of_numbers; /* quantidade de números a incluir nas árvores */
 	int quantity_of_sorts; /* quantidade de números para buscar nas árvores */
 	int max_number, min_number; /* limites mínimo e máximo dos números */
@@ -91,7 +95,7 @@ apassar a quanti-\n\tdade de números\n\n");
 	/* se o número mínimo for maior que o número máximo, exibe uma mensagem
 	 * de erro, as instruções de uso, e encerra o programa */
 	if (min_number>max_number) {
-		printf("ERRO: O número mínimo deve ser menor que o número máximo.\n\n");
+		printf("ERRO: número mínimo deve ser menor que número máximo.\n\n");
 		print_help(args[ZERO]); /* exibir instruções */
 		return (ERROR); /* interromper programa */
 	}
@@ -103,8 +107,11 @@ apassar a quanti-\n\tdade de números\n\n");
 	for (i = ZERO; i < quantity_of_numbers; i++) {
 		sorted_number = random_integer(min_number, max_number);
 		numbers_array[i] = sorted_number; /* guarda para sortear depois */
-		/* incluir na AVL */
-		/* incluir na BST */
+		avl = insert_on_binary_tree(avl, sorted_number);
+		if (is_avl(avl) != TRUE) {
+			avl = balance_binary_tree(avl);
+		}
+		bst = insert_on_binary_tree(bst, sorted_number);
 	}
 
 	/* números aleatórios serão buscados nas duas árvores e arrays guardarão
