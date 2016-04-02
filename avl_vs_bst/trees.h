@@ -112,7 +112,7 @@ binary_tree_t *rotate_left(binary_tree_t *binary_tree) {
 	/* realiza a troca de ponteiros usando o nó auxiliar */
 	if (!is_empty_binary_tree(binary_tree)
 		&& !is_empty_binary_tree(binary_tree->right)) {
-		
+
 		new_binary_tree = binary_tree->right;
 		binary_tree->right = new_binary_tree->left;
 		new_binary_tree->left = binary_tree;
@@ -244,10 +244,18 @@ binary_tree_t *balance_binary_tree(binary_tree_t *avl) {
 /* busca um número em uma árvore binária e retorna a quantidade de comparações
  * realizadas para encontrar esse número */
 int search_on_binary_tree(binary_tree_t *binary_tree, int value){
+	/* se o nó é vazio, uma comparação foi feita */
 	if (is_empty_binary_tree(binary_tree))
 		return (1);
+	/* se valor pertence ao nó, uma comparação foi feita */
 	if (binary_tree->value == value)
 		return (1);
-	return (search_on_binary_tree(binary_tree->left, value)+
-		search_on_binary_tree(binary_tree->right, value));
+	/* se o valor não pertence ao nó e é maior que o valor do nó, procurar
+	 *	à direita, incrementando o valor a ser retornado */
+	if (value > binary_tree->value) {
+		return (search_on_binary_tree(binary_tree->right, value) + 1);
+	}
+	/* se o valor não pertence ao nó e não é maior que o valor do nó, procurar
+	 *	à direita, incrementando o valor a ser retornado */
+	return (search_on_binary_tree(binary_tree->left, value) + 1);
 }
