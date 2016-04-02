@@ -107,10 +107,14 @@ apassar a quanti-\n\tdade de números\n\n");
 	for (i = ZERO; i < quantity_of_numbers; i++) {
 		sorted_number = random_integer(min_number, max_number);
 		numbers_array[i] = sorted_number; /* guarda para sortear depois */
+		
+		/* inserir o número sorteado na AVL */
 		avl = insert_on_binary_tree(avl, sorted_number);
-		if (is_avl(avl) != TRUE) {
+		if (is_avl(avl) != TRUE) { /* balancear, caso esteja desbalanceada */
 			avl = balance_binary_tree(avl);
 		}
+
+		/* inserir o número sorteado na árvore de busca binária */
 		bst = insert_on_binary_tree(bst, sorted_number);
 	}
 
@@ -125,9 +129,13 @@ apassar a quanti-\n\tdade de números\n\n");
 		
 		/* buscar na AVL e salvar a quantidade de comparações no array 
 		 * quantity_of_comparisons_avl, posição i */
+		quantity_of_comparisons_avl[i]
+			= search_on_binary_tree(avl, sorted_number);
 		
 		/* buscar na BST e salver a quantidade de comparações no array
 		 * quantity_of_comparisons_bst, posição i */
+		quantity_of_comparisons_bst[i]
+			= search_on_binary_tree(bst, sorted_number);
 	}
 	
 
