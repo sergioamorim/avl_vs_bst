@@ -110,7 +110,9 @@ binary_tree_t *rotate_left(binary_tree_t *binary_tree) {
 	new_binary_tree = create_empty_binary_tree();
 
 	/* realiza a troca de ponteiros usando o nó auxiliar */
-	if (!is_empty_binary_tree(binary_tree) && !is_empty_binary_tree(binary_tree->right)) {
+	if (!is_empty_binary_tree(binary_tree)
+		&& !is_empty_binary_tree(binary_tree->right)) {
+		
 		new_binary_tree = binary_tree->right;
 		binary_tree->right = new_binary_tree->left;
 		new_binary_tree->left = binary_tree;
@@ -128,7 +130,8 @@ binary_tree_t *rotate_right(binary_tree_t *binary_tree) {
 	new_binary_tree = create_empty_binary_tree();
 
 	/* realiza a troca de ponteiros usando o nó auxiliar */
-	if (!is_empty_binary_tree(binary_tree) && !is_empty_binary_tree(binary_tree->left)) {
+	if (!is_empty_binary_tree(binary_tree)
+		&& !is_empty_binary_tree(binary_tree->left)) {
 
 		new_binary_tree = binary_tree->left;
 		binary_tree->left = new_binary_tree->right;
@@ -146,7 +149,8 @@ int balance_factor_of_tree(binary_tree_t *binary_tree) {
 	/* se o nó não estiver vazio, retorna a altura do filho à esquerda
 	 * menos a altura do filho à direita */
 	if (!is_empty_binary_tree(binary_tree)) {
-		return (height_of_binary_tree(binary_tree->left) - height_of_binary_tree(binary_tree->right));
+		return (height_of_binary_tree(binary_tree->left)
+				- height_of_binary_tree(binary_tree->right));
 	}
 
 	return (ZERO); /* retorna ZERO se o nó estiver vazio */
@@ -199,7 +203,9 @@ binary_tree_t *balance_binary_tree(binary_tree_t *avl) {
 	}
 
 	/* se houver um filho à direita e ele não for uma AVL, balanceie-o */
-	if (!is_avl(avl) && !is_empty_binary_tree(avl->right) && !is_avl(avl->right)) {
+	if (!is_avl(avl) && !is_empty_binary_tree(avl->right)
+		&& !is_avl(avl->right)) {
+
 		avl->right = balance_binary_tree(avl->right);
 	}
 
@@ -208,7 +214,8 @@ binary_tree_t *balance_binary_tree(binary_tree_t *avl) {
 		/* se o fator de balanceamento for maior que 1, há mais nós à
 		 * esquerda */
 		if (balance_factor_of_tree(avl)>1){ /* left */
-			/* se o fator de balanceamento do filho à esquerda for menor que 0, é preciso rotacionar para a esquerda primeiro */
+			/* se o fator de balanceamento do filho à esquerda for menor que 
+			 * 0, é preciso rotacionar para a esquerda primeiro */
 			if (balance_factor_of_tree(avl->left) < 0) { /* left-right */
 				avl->left = rotate_left(avl->left);
 			}
@@ -232,4 +239,15 @@ binary_tree_t *balance_binary_tree(binary_tree_t *avl) {
 	}
 
 	return avl; /* retornar a árvore balanceada */
+}
+
+/* busca um número em uma árvore binária e retorna a quantidade de comparações
+ * realizadas para encontrar esse número */
+int search_on_binary_tree(binary_tree_t *binary_tree, int value){
+	if (is_empty_binary_tree(binary_tree))
+		return (1);
+	if (binary_tree->value == value)
+		return (1);
+	return (search_on_binary_tree(binary_tree->left, value)+
+		search_on_binary_tree(binary_tree->right, value));
 }
