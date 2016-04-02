@@ -1,7 +1,7 @@
 /* uso: ./main.out [-h] [-n QUANTITY_OF_NUMBERS] [-s QUANTITY_OF_SORTS]
  *		[-a MAX_NUMBER] [-i MIN_NUMBER]
  *
- * Inclui uma números aleatórios em duas estruturas de dados: uma AVL e uma
+ * Inclui números aleatórios em duas estruturas de dados: uma AVL e uma
  * árvore de busca binária. Depois, sorteia dentre os números incluídos,
  * números a serem buscados em ambas as estruturas. Para cada busca, o número
  * de comparações necessárias para encontrar o número é contado e servirá para
@@ -174,7 +174,7 @@ void print_help(char *self_name) {
 		self_name);
 	
 	printf("\n\n");
-	printf("Inclui uma números aleatórios em duas estruturas de dados: uma AV\
+	printf("Inclui números aleatórios em duas estruturas de dados: uma AV\
 L e uma\nárvore de busca binária. Depois, sorteia dentre os números incluídos\
 ,\nnúmeros a serem buscados em ambas as estruturas. Para cada busca, o número\
  de\ncomparações necessárias para encontrar o número é contado e servirá para\
