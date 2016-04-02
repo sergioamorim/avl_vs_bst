@@ -12,10 +12,12 @@
  * -h		exibe essa mensagem de ajuda e finaliza o programa
  * -n QUANTITY_OF_NUMBERS
  *		quantidade de números que serão incluídos em ambas as estruturas de
- *		dados (padrão: 10000 | obs: o número -1 não deve ser usado)
+ *		dados (padrão: 10000 | obs: o número -1 não deve ser usado; deve ser
+ *		maior que a quantidade de números a serem sorteados)
  * -s QUANTITY_OF_SORTS
  *		quantidade de números a serem sorteados para serem buscados em ambas
- *		as estruturas (padrão: 1000 | obs: o número -1 não deve ser usado)
+ *		as estruturas (padrão: 1000 | obs: o número -1 não deve ser usado;
+ *		deve ser menor que a quantidade de números)
  * -a MAX_NUMBER
  *		número máximo que pode ser sorteado e incluído nas estruturas (padrão:
  *		999999 | obs: os números -1 e o inteiro máximo não devem ser usados)
@@ -24,16 +26,20 @@
  * 		-99999 | obs: o número -1 não deve ser usado)
  */
 
+
 #include <stdio.h>
 #include "global.h" /* constantes e funções globais */
 #include "arguments.h" /* funções para tratar argumentos */
 #include "randomize.h" /* funções para randomização de números */
 
 
+/* valores padrão para as variáveis do programa, caso algum argumento não seja
+ * setado */
 #define DEFAULT_QUANTITY_OF_NUMBERS (10000)
 #define DEFAULT_QUANTITY_OF_SORTS (1000)
 #define DEFAULT_MAX_NUMBER (999999)
 #define DEFAULT_MIN_NUMBER (-99999)
+
 
 /* exibe instruções de uso do programa e informações sobre o funcionamento */
 void print_help(char *self_name);
@@ -41,11 +47,11 @@ void print_help(char *self_name);
 
 int main (int args_count, char *args[]) {
 	
-	int quantity_of_numbers;
-	int quantity_of_sorts;
-	int max_number, min_number;
-	int sorted_number;
-	int i;
+	int quantity_of_numbers; /* quantidade de números a incluir nas árvores */
+	int quantity_of_sorts; /* quantidade de números para buscar nas árvores */
+	int max_number, min_number; /* limites mínimo e máximo dos números */
+	int sorted_number; /* guardará temporariamente o número gerado/sorteado */
+	int i; /* será usado como índice para laços */
 
 	/* se o argumento de ajuda foi passado, exibir instruções e finalizar */
 	if (argument_is_set(args_count, args, 'h')) {
@@ -72,25 +78,61 @@ int main (int args_count, char *args[]) {
 	if (min_number == ERROR)
 		min_number = DEFAULT_MIN_NUMBER;
 
+	/* se a quantidade de números a serem sorteados for maior que a quantidade
+	 * de números, exibe uma mensagem de erro, as instruções de uso e encerra
+	 * o programa */
+	if (quantity_of_sorts>quantity_of_numbers) {
+		printf("ERRO: a quantidade de números a serem sorteados não deve ultr\
+apassar a quanti-\n\tdade de números\n\n");
+		print_help(args[ZERO]); /* exibir instruções */
+		return (ERROR); /* interromper programa */
+	}
+
 	/* se o número mínimo for maior que o número máximo, exibe uma mensagem
 	 * de erro, as instruções de uso, e encerra o programa */
 	if (min_number>max_number) {
 		printf("ERRO: O número mínimo deve ser menor que o número máximo.\n\n");
-		print_help(args[ZERO]);
-		return (ERROR); 
-	}
-
-
-	int numbers_array[quantity_of_numbers];
-	for (i = ZERO; i < quantity_of_numbers; i++) {
-		sorted_number = random_integer(min_number, max_number);
-		printf("%d\n", sorted_number);
-		numbers_array[i] = sorted_number;
+		print_help(args[ZERO]); /* exibir instruções */
+		return (ERROR); /* interromper programa */
 	}
 	
-	return (ZERO);
+
+	/* array que receberá os números aleatórios para sortear depois*/	
+	int numbers_array[quantity_of_numbers];
+	/* guarda os números aleatórios nas duas estruturas */
+	for (i = ZERO; i < quantity_of_numbers; i++) {
+		sorted_number = random_integer(min_number, max_number);
+		numbers_array[i] = sorted_number; /* guarda para sortear depois */
+		/* incluir na AVL */
+		/* incluir na BST */
+	}
+
+	/* números aleatórios serão buscados nas duas árvores e arrays guardarão
+	 * a quantidade de comparações para cada número sorteado para que o gráfi-
+	 * co seja plotado com esses valores depois */
+	int quantity_of_comparisons_avl[quantity_of_sorts];
+	int quantity_of_comparisons_bst[quantity_of_sorts];
+	for (i = ZERO; i < quantity_of_sorts; i++) {
+		sorted_number = sort_a_number(numbers_array, quantity_of_numbers);
+		quantity_of_numbers--;
+		
+		/* buscar na AVL e salvar a quantidade de comparações no array 
+		 * quantity_of_comparisons_avl, posição i */
+		
+		/* buscar na BST e salver a quantidade de comparações no array
+		 * quantity_of_comparisons_bst, posição i */
+	}
+	
+
+	/* plotar gráfico com os valores contidos nos arrays
+	 * quantity_of_comparisons_avl e quantity_of_comparisons_bst relacionados
+	 * com a posição de cada valor */
+
+
+	return (ZERO); /* programa executado com sucesso */
 
 }
+
 
 /* exibe instruções de uso do programa e informações sobre o funcionamento */
 void print_help(char *self_name) {
@@ -113,11 +155,12 @@ L e uma\nárvore de busca binária. Depois, sorteia dentre os números incluído
 	printf("\n");
 	printf("  -n QUANTITY_OF_NUMBERS\n\t\tquantidade de números que serão inc\
 luídos em ambas as estru-\n\t\tturas de dados (padrão: 10000 | obs: o número \
--1 não deve ser\n\t\tusado)");
+-1 não deve ser\n\t\tusado; deve ser maior que a quantidade de números a sere\
+m sor-\n\t\tteados)");
 	printf("\n");
 	printf("  -s QUANTITY_OF_SORTS\n\t\tquantidade de números a serem sortead\
 os para serem buscados em\n\t\tambas as estruturas (padrão: 1000 | obs: o núm\
-ero -1 não deve\n\t\tser usado)");
+ero -1 não deve\n\t\tser usado; deve ser menor que a quantidade de números)");
 	printf("\n");
 	printf("  -a MAX_NUMBER\n\t\tnúmero máximo que pode ser sorteado e incluí\
 do nas estruturas\n\t\t(padrão: 999999 | obs: os números -1 e o inteiro máxim\
