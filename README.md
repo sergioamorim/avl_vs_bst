@@ -10,7 +10,7 @@ Membros da equipe:
 
 Trello do projeto: https://trello.com/b/ABXiNDng
 
-Este programa inclui uma números aleatórios em duas estruturas de dados: uma AVL e uma árvore de busca binária. Depois, sorteia dentre os números incluídos, números a serem buscados em ambas as estruturas. Para cada busca, o número de comparações necessárias para encontrar o número é contado e servirá para plotar um gráfico que relaciona a quantidade de comparações necessárias com a quantidade de números buscados.
+Este programa inclui números aleatórios em duas estruturas de dados: uma AVL e uma árvore de busca binária. Depois, sorteia dentre os números incluídos, números a serem buscados em ambas as estruturas. Para cada busca, o número de comparações necessárias para encontrar o número é contado e servirá para plotar um gráfico que relaciona a quantidade de comparações necessárias com a quantidade de números buscados.
 
 
 
