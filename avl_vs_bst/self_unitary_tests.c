@@ -14,7 +14,7 @@
 
 
 /* Funções da biblioteca randomize.h */
-bool test_random_interger(); /* testa a função random_interger */
+bool test_random_integer(); /* testa a função random_integer */
 bool test_sort_a_number(); /* testa a função sort_a_number */
 
 
@@ -30,9 +30,9 @@ bool test_get_argument_value(int args_count, char *args[]);
  */
 void main (int args_count, char *args[]) {
     
-    /* imprimir OK se a função random_interger estiver funcionando */
-    printf("random_interger function\t\t");
-    if (test_random_interger() != FALSE)
+    /* imprimir OK se a função random_integer estiver funcionando */
+    printf("random_integer function\t\t");
+    if (test_random_integer() != FALSE)
         printf("OK\n");
     else
         printf("FAIL\n");
@@ -61,10 +61,10 @@ void main (int args_count, char *args[]) {
 }
 
 
-/* Retorna TRUE caso a função random_interger esteja funcionando corretamente
+/* Retorna TRUE caso a função random_integer esteja funcionando corretamente
  * e FALSE caso contrário */
-bool test_random_interger(){
-    if (random_interger(TESTING_NUMBER, TESTING_NUMBER) == TESTING_NUMBER)
+bool test_random_integer(){
+    if (random_integer(TESTING_NUMBER, TESTING_NUMBER) == TESTING_NUMBER)
         return (TRUE);
     return (FALSE);
 }
