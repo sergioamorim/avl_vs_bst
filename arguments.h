@@ -1,5 +1,4 @@
-/* Funções e constantes relacionadas à manipulação de argumentos 
- */
+/* Funções e constantes relacionadas à manipulação de argumentos */
 
 
 #include <stdlib.h> /* atoi */
