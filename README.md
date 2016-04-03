@@ -20,7 +20,7 @@ Este programa inclui números aleatórios em duas estruturas de dados: uma AVL e
 2. Rodar com o argumento -h para obter instruções;
 3. Não usar o número -1 como valor de nenhum argumento do programa;
 4. O arquivo `self_unitary_tests.c` possui testes unitários para as funções mais importantes do programa - caso modifique alguma dessas funções, compile esse algoritmo e execute-o para certificar-se do correto funcionamento dessas funções;
-5. Para facilitar a execução dos códigos durante a codificação, o script compile\_run\_and_plot.sh pode ser usado para compilar, rodar sem argumentos e plotar o gráfico com o arquivo gerado; basta usar `chmod +x compile_run_and_plot.sh` para adicionar permissão de execução para o arquivo e depois executá-lo com `compile_run_and_plot.sh`.
+5. Para facilitar a execução dos códigos durante a codificação, o script compile\_run\_and_plot.sh pode ser usado para compilar, rodar sem argumentos e plotar o gráfico com o arquivo gerado; estando no diretório do programa, basta usar `chmod +x compile_run_and_plot.sh` para adicionar permissão de execução para o arquivo e depois executá-lo com `./compile_run_and_plot.sh`; é necessário ter o R instalado para plotar o gráfico.
 
 ######argumentos opcionais:
 **_-h_**: exibe uma mensagem de ajuda e finaliza o programa
@@ -46,4 +46,4 @@ um valor positivo)
 O programa gerará um arquivo .R que pode ser usado para plotar um gráfico que relaciona o crescimento número de comparações necessárias ao realizar buscas nos dois tipos de árvores (AVL e BST) com o número de buscas realizado.
 
 
-Testado usando o GCC 5.2.1 GNU/Linux
+Testado usando o GCC 5.2.1 GNU/Linux e R 3.2.2
