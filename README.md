@@ -46,4 +46,7 @@ um valor positivo)
 O programa gerará um arquivo .R que pode ser usado para plotar um gráfico que relaciona o crescimento número de comparações necessárias ao realizar buscas nos dois tipos de árvores (AVL e BST) com o número de buscas realizado.
 
 
+As recomendações de estilo na escrita do código descritas neste documento foram seguidas a medida que não fugiam do escorpo do projeto: https://www.doc.ic.ac.uk/lab/cplus/cstyle.html
+
+
 Testado usando o GCC 5.2.1 GNU/Linux e R 3.2.2
