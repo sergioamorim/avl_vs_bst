@@ -2,7 +2,6 @@
  */
 
 
-#include <stdio.h>
 #include <stdlib.h> /* atoi */
 #include "global.h" /* constantes e funções globais */
 
@@ -10,6 +9,24 @@
 /* Constantes relacionadas à manipulação de argumentos */
 #define ARG_SYMBOL ('-') /* símbolo que precede argumentos */
 #define MAX_VALUE_LENGTH (10) /* comprimento máximo para valor de argumento */
+
+
+/* Recebe a contagem de argumentos, um array de argumentos e um argumento de-
+ * sejado. Caso o argumento desejado estiver contido no array de argumentos,
+ * retorna a posição do argumento no array de argumentos; caso contrário, re-
+ * torna FALSE */
+int argument_is_set(int args_count, char *args[], char arg);
+
+/* Recebe o número de argumentos, a lista de strings com os argumentos
+ * e qual o argumento desejado;
+ * Retorna o valor inteiro o argumento desejado, ou ERROR caso o valor não
+ * seja encontrado */
+int get_argument_value(int args_count, char *args[], char arg);
+
+/* recebe um caracter e retorna ERROR se não for um dígito numérico ou sua re-
+ * presentação decimal, caso seja um dígito numérico. */
+int char_to_int(char character);
+
 
 
 /* Recebe a contagem de argumentos, um array de argumentos e um argumento de-
