@@ -14,12 +14,12 @@
  *			tos -a e -i)
  * -n QUANTITY_OF_NUMBERS
  *		quantidade de números que serão incluídos em ambas as estruturas de
- *		dados (padrão: 10000 | obs: o número -1 não deve ser usado; deve ser
+ *		dados (padrão: 1000 | obs: o número -1 não deve ser usado; deve ser
  *		maior que a quantidade de números a serem sorteados; deve ser um valor
  *		positivo)
  * -s QUANTITY_OF_SORTS
  *		quantidade de números a serem sorteados para serem buscados em ambas
- *		as estruturas (padrão: 1000 | obs: o número -1 não deve ser usado;
+ *		as estruturas (padrão: 500 | obs: o número -1 não deve ser usado;
  *		deve ser menor que a quantidade de números; deve ser um valor positi-
  *		vo)
  * -a MAX_NUMBER
