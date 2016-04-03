@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h> /* definição da função rand() */
+#include <stdlib.h> /* rand() */
 #include "global.h" /* constantes e funções globais do projeto */
 
 /* Recebe um array e duas posições do array; troca os valores das
