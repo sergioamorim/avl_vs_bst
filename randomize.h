@@ -1,20 +1,23 @@
+/* Funções relativas à randomização de números */
+
+
 #include <stdlib.h> /* rand() */
 #include "global.h" /* constantes e funções globais do projeto */
 
-/* Recebe um array e duas posições do array; troca os valores das
- * posições recebidas entre si */
-void swap(int *array, int position_a, int position_b) {
-	int aux;
-	aux = array[position_a];
-	array[position_a] = array[position_b];
-	array[position_b] = aux;
-}
 
 /* Retorna um inteiro aleatório, respeitando um número mínimo e um número má-
  * ximo, recebidos pela função. */
-int random_integer(int min, int max){
-    return ((rand()%(max-min+1))+min);
-}
+int random_integer(int min, int max);
+
+/* Retorna um inteiro aleatório pertencente a um array e troca o valor do
+ * número sorteado com o número na última posição do array. Deve receber um
+ * array completamente preenchido e o tamanho do array. */
+int sort_a_number(int *array, int array_size);
+
+/* Recebe um array e duas posições do array; troca os valores das
+ * posições recebidas entre si */
+void swap(int *array, int position_a, int position_b);
+
 
 /* Retorna um inteiro aleatório pertencente a um array e troca o valor do
  * número sorteado com o número na última posição do array. Deve receber um
@@ -29,3 +32,19 @@ int sort_a_number(int *array, int array_size){
 
    	return (sorted_number); /* retorna o valor do array na posição sorteada */
 }
+
+/* Retorna um inteiro aleatório, respeitando um número mínimo e um número má-
+ * ximo, recebidos pela função. */
+int random_integer(int min, int max){
+    return ((rand()%(max-min+1))+min);
+}
+
+/* Recebe um array e duas posições do array; troca os valores das
+ * posições recebidas entre si */
+void swap(int *array, int position_a, int position_b) {
+	int aux;
+	aux = array[position_a];
+	array[position_a] = array[position_b];
+	array[position_b] = aux;
+}
+
