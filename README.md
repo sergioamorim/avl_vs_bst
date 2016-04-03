@@ -3,7 +3,7 @@ Comparação de eficiência entre AVL e Árvores de Busca Binária
 
 Este programa faz parte de um projeto de Estrutura de Dados do período 2015.2 no IC (Instituto de Computação) da UFAL (Universidade Federal de Alagoas), Campus A.C. Simões;
 
-Professor responsável: Márcio Ribeiro (http://ic.ufal.br/marcio)
+Professor responsável: Márcio Ribeiro [http://ic.ufal.br/marcio]
 
 Membros da equipe:
 + Sergio A. T. Amorim <sata@ic.ufal.br>
@@ -46,7 +46,7 @@ um valor positivo)
 O programa gerará um arquivo .R que pode ser usado para plotar um gráfico que relaciona o crescimento número de comparações necessárias ao realizar buscas nos dois tipos de árvores (AVL e BST) com o número de buscas realizado.
 
 
-As recomendações de estilo na escrita do código descritas neste documento foram seguidas a medida que não fugiam do escorpo do projeto: Recommended C Style and Coding Standards [Cannon] (https://www.doc.ic.ac.uk/lab/cplus/cstyle.html)
+As recomendações de estilo na escrita do código descritas neste documento foram seguidas a medida que não fugiam do escorpo do projeto: Recommended C Style and Coding Standards (Cannon) [https://www.doc.ic.ac.uk/lab/cplus/cstyle.html]
 
 
 Testado usando o GCC 5.2.1 GNU/Linux e R 3.2.2
