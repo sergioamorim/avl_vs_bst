@@ -16,7 +16,7 @@
  * sejado. Caso o argumento desejado estiver contido no array de argumentos,
  * retorna a posição do argumento no array de argumentos; caso contrário, re-
  * torna FALSE */
-bool argument_is_set(int args_count, char *args[], char arg) {
+int argument_is_set(int args_count, char *args[], char arg) {
 
 	int i, j; /* índices dos laços para iterar posições dos argumentos */
 	for (i = 1; i < args_count; i++) {
