@@ -263,5 +263,5 @@ int search_on_binary_tree(binary_tree_t *binary_tree, int value){
 		return (search_on_binary_tree(binary_tree->left, value) + 1);
 	}
 
-	return (0);
+	return (ZERO);
 }
