@@ -37,13 +37,15 @@ binary_tree_t *insert_on_binary_tree(binary_tree_t *, int);
 /* retorna um nó de árvore com o inteiro recebido e que não tem filhos */
 binary_tree_t *create_binary_tree(int);
 
-void print_tree(binary_tree_t *);
-
 /* retorna TRUE se o nó recebido estiver vazio ou FALSE caso contrário */
 int is_empty_binary_tree(binary_tree_t *);
 
 /* retorna a árvore binária recebida balanceada de forma a ser uma AVL */
 binary_tree_t *balance_binary_tree(binary_tree_t *);
+
+/* retorna o número de comparações necessárias para encontrar um valor inteiro
+ * recebido em uma árvore de busca binária recebida */
+int search_on_binary_tree(binary_tree_t *, int);
 
 
 /* retorna um ponteiro do tipo árvore binária para NULL, apenas */
@@ -84,6 +86,9 @@ int is_avl(binary_tree_t *binary_tree) {
 	/* assume que os nós filhos avls, para caso não haja filhos */
 	int right_is_avl = 1;
 	int left_is_avl = 1;
+
+	if (is_empty_binary_tree(binary_tree))
+		return (ERROR);
 
 	/* se houver filhos, verifica se estão balanceados e guarda a resposta */
 	if (!is_empty_binary_tree(binary_tree->left)) {
@@ -234,7 +239,7 @@ binary_tree_t *balance_binary_tree(binary_tree_t *avl) {
 			}
 
 			/* right-right */
-			avl = rotate_left(avl); /* rotacionar para a direita */
+			avl = rotate_left(avl); /* rotacionar para a esquerda */
 		}
 	}
 
@@ -252,16 +257,10 @@ int search_on_binary_tree(binary_tree_t *binary_tree, int value){
 		return (1);
 	/* se o valor não pertence ao nó e é maior que o valor do nó, procurar
 	 *	à direita, incrementando o valor a ser retornado */
-	if (value > binary_tree->value
-		&& !is_empty_binary_tree(binary_tree->right)) {
-		
+	if (value > binary_tree->value) {		
 		return (search_on_binary_tree(binary_tree->right, value) + 1);
 	}
 	/* se o valor não pertence ao nó e não é maior que o valor do nó, procurar
 	 *	à direita, incrementando o valor a ser retornado */
-	if (!is_empty_binary_tree(binary_tree->right)){
-		return (search_on_binary_tree(binary_tree->left, value) + 1);
-	}
-
-	return (ZERO);
+	return (search_on_binary_tree(binary_tree->left, value) + 1);
 }
