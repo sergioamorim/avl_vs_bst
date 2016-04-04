@@ -1,0 +1,37 @@
+ [-h] [-o] [-n QUANTITY_OF_NUMBERS] [-s QUANTITY_OF_SORTS]
+		[-a MAX_NUMBER] [-i MIN_NUMBER] [-f FILE_NAME]
+
+Inclui números aleatórios em duas estruturas de dados: uma AVL e uma árvore de
+busca binária. Depois, sorteia dentre os números incluídos, números a serem
+buscados em ambas as estruturas. Para cada busca, o número de comparações ne-
+cessárias para encontrar o número é contado e servirá para plotar um gráfico
+que relaciona a quantidade de comparações necessárias com a quantidade de nú-
+meros buscados. Pode-se forçar a inclusão e busca de números em ordem usando o
+argumento -o.
+
+argumentos opcionais:
+  -h		exibe essa mensagem de ajuda e finaliza o programa
+  -o		força a inserção de números em ordem (ignora argumentos -a e
+		-i)
+  -n QUANTITY_OF_NUMBERS
+		quantidade de números que serão incluídos em ambas as estrutu-
+		ras de dados (padrão: 1000 |obs: o número -1 não deve ser usa-
+		do; deve ser maior que a quantidade de números a serem sortea-
+		dos; deve ser um valor positivo)
+  -s QUANTITY_OF_SORTS
+		quantidade de números a serem sorteados para serem buscados em
+		ambas as estruturas (padrão: 500 | obs: o número -1 não deve
+		ser usado; deve ser menor que a quantidade de números; deve
+		ser um valor positivo)
+  -a MAX_NUMBER
+		número máximo que pode ser sorteado e incluído nas estruturas
+		(padrão: 999999 | obs: os números -1 e o inteiro máximo não
+		devem ser usados; deve ser maior que) o número mínimo)
+  -i MIN_NUMBER
+		número mínimo que pode ser sorteado e incluído nas estruturas
+		(padrão: -99999 | obs: o número -1 nãodeve ser usado; deve ser
+		menor que o número máximo)
+  -f FILE_NAME
+		nome para o arquivo de saída, sem extensão (padrão: avl_vs_bst
+		| não deve ultrapassar 100 caracteres; deve haver um espaço
+		entre o argumento e o nome do arquivo)
