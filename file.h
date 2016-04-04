@@ -69,10 +69,13 @@ int print_help(char *self_name) {
  * executado com sucesso  */
 int write_r_file (int *quantity_of_comparisons_avl,
 					int *quantity_of_comparisons_bst,
-	 				int quantity_of_sorts, char *r_file_name) {
+	 				int quantity_of_sorts, char *file_name) {
 	/* abre o arquivo para inserir os dados coletados */
 	FILE *r_file;
 	FILE *r_template_file;
+	char r_file_name[103];
+	strcpy(r_file_name, file_name);
+	strcat(r_file_name, ".R");
 
 	int i; /* servirá como índice para laço */
 
@@ -110,7 +113,7 @@ int write_r_file (int *quantity_of_comparisons_avl,
 	fprintf(r_file, "%d)\n", quantity_of_comparisons_bst[i]);
 	
 	/* copia as configurações do gráfico para o arquivo */
-	fprintf(r_file, "pdf('%s')\n", r_file_name);
+	fprintf(r_file, "pdf('%s')\n", file_name);
 	copy_file(r_file, r_template_file);
 
 

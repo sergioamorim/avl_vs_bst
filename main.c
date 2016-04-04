@@ -65,7 +65,6 @@ int main (int args_count, char *args[]) {
 	
 	/* nome do arquivo de saída com os números de comparações */
 	char file_name[101];
-	char r_file_name[103];
 
 	/* AVL que será comparada à árvore de busca binária */
 	binary_tree_t *avl = create_empty_binary_tree();
@@ -129,8 +128,6 @@ int main (int args_count, char *args[]) {
 	} else {
 		strcpy(file_name, DEFAULT_FILE_NAME);
 	}
-	strcpy(r_file_name, file_name);
-	strcat(r_file_name, ".R");
 
 	/* se alguma das quantidades for negativa, exibe uma mensagem de erro,
 	 * exibe as instruções de uso e encerra o programa */
@@ -246,7 +243,7 @@ int main (int args_count, char *args[]) {
 	 * quantity_of_comparisons_avl e quantity_of_comparisons_bst relacionados
 	 * com a posição de cada valor */
 	 write_r_file(quantity_of_comparisons_avl, quantity_of_comparisons_bst,
-	 				quantity_of_sorts, r_file_name);
+	 				quantity_of_sorts, file_name);
 
 	return (ZERO); /* programa executado coma sucesso */
 
