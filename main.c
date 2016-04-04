@@ -45,6 +45,7 @@
 #include "arguments.h" /* funções para tratar argumentos */
 #include "randomize.h" /* funções para randomização de números */
 #include "trees.h" /*estruturas e funções de AVL e árvores de busca binária */
+#include "file.h" /* funções relativas ao tratamento de arquivos */
 
 
 /* valores padrão para as variáveis do programa, caso algum argumento não seja
@@ -53,10 +54,6 @@
 #define DEFAULT_QUANTITY_OF_SORTS (500)
 #define DEFAULT_MAX_NUMBER (999999)
 #define DEFAULT_MIN_NUMBER (-99999)
-#define DEFAULT_FILE_NAME "avl_vs_bst"
-
-/* exibe instruções de uso do programa e informações sobre o funcionamento */
-void print_help(char *self_name);
 
 
 /* retornará ZERO se for executado com sucesso e ERROR caso seja interrompido por
@@ -102,7 +99,8 @@ int main (int args_count, char *args[]) {
 
 	/* se o argumento de ajuda foi passado, exibir instruções e finalizar */
 	if (argument_is_set(args_count, args, 'h')) {
-		print_help(args[ZERO]);
+		if (print_help(args[ZERO]) != ZERO)
+			return (ERROR);
 		return (ZERO);
 	}
 
@@ -161,20 +159,13 @@ int main (int args_count, char *args[]) {
 		return (ERROR); /* interromper programa */
 	}
 
-	/* abre o arquivo para inserir os dados que serão coletados */
-	r_file = fopen(r_file_name, "w");
-	/* em caso de erro ao abrir o arquivo, exibe uma mensagem de erro e inter-
-	 * rompe o programa */
-	if (r_file == NULL) {
-		fprintf(stderr, "ERRO: falha ao tentar escrever no arquivo ");
-		fprintf(stderr, "%s.\n", file_name);
-		return (ERROR); /* interromper programa */
-	}
-
+	
+	
 	/* fazer com que a função de randomização gere números diferentes a cada vez
 	 * que o programa roda | atualizar o parâmetro da função de acordo com o
 	 * tempo */
 	srand(time(NULL));
+
 
 	/* array que receberá os números aleatórios para sortear depois*/	
 	int numbers_array[quantity_of_numbers];
@@ -198,34 +189,44 @@ int main (int args_count, char *args[]) {
 
 	avl = balance_binary_tree(avl); /* formar a AVL */
 
+
 	/* números aleatórios serão buscados nas duas árvores e arrays guardarão
 	 * a quantidade de comparações para cada número sorteado para que o gráfi-
 	 * co seja plotado com esses valores depois */
 	int quantity_of_comparisons_avl[quantity_of_sorts];
 	int quantity_of_comparisons_bst[quantity_of_sorts];
 
+	/* realizar buscas por números e salvar o número de comparações em forma
+	 * de somatório no array de informações de cada estrutura */
 	switch (force_order){
 		case FALSE:
 			sorted_number = sort_a_number(numbers_array, quantity_of_numbers);
+			/* ao usar a função sort_a_number, o número sorteado vai para
+			 * o final do array; decrementar o tamanho do array garantirá
+			 * que um número não seja sorteado mais de uma vez */
+			quantity_of_numbers--;
 			break;
 		case TRUE:
 			sorted_number = ZERO;				
 	}
-	quantity_of_numbers--;
 	quantity_of_comparisons_avl[ZERO] 
 		= search_on_binary_tree(avl,sorted_number);
 	quantity_of_comparisons_bst[ZERO]
 		= search_on_binary_tree(bst,sorted_number);
-
 	for (i = 1; i < quantity_of_sorts; i++) {
-		switch (force_order){
+		/* caso o atributo -o exista, os números serão buscados em ordem */
+		switch (force_order){ 
 			case FALSE:
-				sorted_number = sort_a_number(numbers_array, quantity_of_numbers);
+				sorted_number = sort_a_number(numbers_array,
+												quantity_of_numbers);
+				/* ao usar a função sort_a_number, o número sorteado vai para
+				 * o final do array; decrementar o tamanho do array garantirá
+				 * que um número não seja sorteado mais de uma vez */
+				quantity_of_numbers--;
 				break;
 			case TRUE:
 				sorted_number = i;				
 		}
-		quantity_of_numbers--;
 		
 		/* buscar na AVL e salvar a quantidade de comparações no array 
 		 * quantity_of_comparisons_avl, posição i */
@@ -244,78 +245,9 @@ int main (int args_count, char *args[]) {
 	 * vo servirá para plotar o gráfico com os valores contidos nos arrays
 	 * quantity_of_comparisons_avl e quantity_of_comparisons_bst relacionados
 	 * com a posição de cada valor */
-	fprintf(r_file, "avl <- c(");
-	for (i = 0; i < (quantity_of_sorts-1); i++) {
-		fprintf(r_file, "%d, ", quantity_of_comparisons_avl[i]);
-	}
-	fprintf(r_file, "%d", quantity_of_comparisons_avl[i]);
-	fprintf(r_file, ")\nbst <- c(");
-	for (i = 0; i < (quantity_of_sorts-1); i++) {
-		fprintf(r_file, "%d, ", quantity_of_comparisons_bst[i]);
-	}
-	/* configurações do gráfico */
-	fprintf(r_file, "%d", quantity_of_comparisons_bst[i]);
-	fprintf(r_file, ")\ncomparisons_range <- range(0, avl, bst)\n");
-	fprintf(r_file, "pdf('%s.pdf')\n", file_name);
-	fprintf(r_file, "options('scipen'=100, 'digits'=4)\n");
-	fprintf(r_file, "searchs_range <- range(0, length(avl))\nplot(avl, ");
-	fprintf(r_file, "type='l', col='blue', ylim=comparisons_range,");
-	fprintf(r_file, "axes = FALSE, ann = FALSE)\naxis(1, at = searchs_range");
-	fprintf(r_file, "[2]/10*0:searchs_range[2])\naxis(2, ");
-	fprintf(r_file, "at=comparisons_range[2]/10*0:co");
-	fprintf(r_file, "mparisons_range[2])\nbox()\nlines(bst, type = 'l',");
-	fprintf(r_file, " col = 'red')\ntitle(main = 'AVL vs ");
-	fprintf(r_file, "BST', font.main = 2)\ntitle(ylab = 'Comparações')\n");
-	fprintf(r_file, "title(xlab = 'Buscas')\nlegend(1, ");
-	fprintf(r_file, "comparisons_range[2], c('AVL', 'BST'), cex = 1, ");
-	fprintf(r_file, "col = c('blue', 'red'), lty = 1)");
-	
-	fclose(r_file); /* fechar arquivo */
+	 write_r_file(quantity_of_comparisons_avl, quantity_of_comparisons_bst,
+	 				quantity_of_sorts, r_file_name);
 
 	return (ZERO); /* programa executado coma sucesso */
 
-}
-
-
-/* exibe instruções de uso do programa e informações sobre o funcionamento */
-void print_help(char *self_name) {
-	printf("uso: %s [-h] [-o] [-n QUANTITY_OF_NUMBERS] [-s QUANT", self_name);
-	printf("ITY_OF_SORTS]\n\t\t[-a MAX_NUMBER] [-i MIN_NUMBER] [-f FILE_NAM");
-	printf("E]\n\nInclui números aleatórios em duas estruturas de dados: um");
-	printf("a AVL e uma\nárvore de busca binária. Depois, sorteia dentre os");
-	printf(" números incluídos,\nnúmeros a serem buscados em ambas as estru");
-	printf("turas. Para cada busca, o número de\ncomparações necessárias pa");
-	printf("ra encontrar o número é contado e servirá para\nplotar um gráfi");
-	printf("co que relaciona a quantidade de comparações necessárias com\na");
-	printf(" quantidade de números buscados. Pode-se forçar a inclusão e bu");
-	printf("sca de números\nem ordem usando o argumento -o.\n\n");
-	printf("argumentos opcionais:");
-	printf("\n");
-	printf("  -h\t\texibe essa mensagem de ajuda e finaliza o programa\n");
-	printf("  -o\t\tforça a inserção de números em ordem (ignora argumentos");
-	printf(" -a e\n\t\t-i)\n");
-	printf("  -n QUANTITY_OF_NUMBERS\n\t\tquantidade de números que serão i");
-	printf("ncluídos em ambas as estru-\n\t\tturas de dados (padrão: 1000 |");
-	printf("obs: o número -1 não deve ser\n\t\tusado; deve ser maior que a ");
-	printf("quantidade de números a serem sor-\n\t\tteados; deve ser um val");
-	printf("or positivo)");
-	printf("\n");
-	printf("  -s QUANTITY_OF_SORTS\n\t\tquantidade de números a serem sorte");
-	printf("ados para serem buscados em\n\t\tambas as estruturas (padrão: 5");
-	printf("00 | obs: o número -1 não deve\n\t\tser usado; deve ser menor q");
-	printf("ue a quantidade de números; deve ser\n\t\tum valor positivo)");
-	printf("\n");
-	printf("  -a MAX_NUMBER\n\t\tnúmero máximo que pode ser sorteado e incl");
-	printf("uído nas estruturas\n\t\t(padrão: 999999 | obs: os números -1 e");
-	printf(" o inteiro máximo não\n\t\tdevem ser usados; deve ser maior que");
-	printf(") o número mínimo)");
-	printf("\n");
-	printf("  -i MIN_NUMBER\n\t\tnúmero mínimo que pode ser sorteado e incl");
-	printf("uído nas estruturas\n\t\t(padrão: -99999 | obs: o número -1 não");
-	printf("deve ser usado; deve ser\n\t\tmenor que o número máximo)");
-	printf("\n");
-	printf("  -f FILE_NAME\n\t\tnome para o arquivo de saída, sem extensão ");
-	printf("(padrão: avl_vs_bst\n\t\t| não deve ultrapassar 100 caracteres;");
-	printf(" deve haver um espaço en-\n\t\ttre o argumento e o nome do arqu");
-	printf("ivo)\n");
 }
