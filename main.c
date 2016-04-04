@@ -204,7 +204,13 @@ int main (int args_count, char *args[]) {
 	int quantity_of_comparisons_avl[quantity_of_sorts];
 	int quantity_of_comparisons_bst[quantity_of_sorts];
 
-	sorted_number = sort_a_number(numbers_array, quantity_of_numbers);
+	switch (force_order){
+		case FALSE:
+			sorted_number = sort_a_number(numbers_array, quantity_of_numbers);
+			break;
+		case TRUE:
+			sorted_number = ZERO;				
+	}
 	quantity_of_numbers--;
 	quantity_of_comparisons_avl[ZERO] 
 		= search_on_binary_tree(avl,sorted_number);
@@ -251,6 +257,7 @@ int main (int args_count, char *args[]) {
 	fprintf(r_file, "%d", quantity_of_comparisons_bst[i]);
 	fprintf(r_file, ")\ncomparisons_range <- range(0, avl, bst)\n");
 	fprintf(r_file, "pdf('%s.pdf')\n", file_name);
+	fprintf(r_file, "options('scipen'=100, 'digits'=4)\n");
 	fprintf(r_file, "searchs_range <- range(0, length(avl))\nplot(avl, ");
 	fprintf(r_file, "type='l', col='blue', ylim=comparisons_range,");
 	fprintf(r_file, "axes = FALSE, ann = FALSE)\naxis(1, at = searchs_range");
