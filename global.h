@@ -1,4 +1,4 @@
-/* Tipos abstratos de dados e constantes que podem ser utilizadas em qualquer
+/* Tipos de dados e constantes que podem ser utilizadas em qualquer
  * parte do projeto.
  */
 
