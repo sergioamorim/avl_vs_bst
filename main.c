@@ -33,9 +33,8 @@
  * 		-99999 | obs: o número -1 não deve ser usado; deve ser menor que o nú-
  *		mero máximo)
  * -f FILE_NAME
- *		nome para o arquivo de saída, sem extensão (padrão: avl_vs_bst | não deve 
- *		ultrapassar 100 caracteres; deve haver um espaço entre o argumento e
- *		o nome do arquivo)
+ *		nome para o arquivo de saída, sem extensão (padrão: avl_vs_bst | deve
+ *		haver um espaço entre o argumento e o nome do arquivo)
  */
 
 
@@ -43,6 +42,7 @@
 #include <string.h> /* função strcpy */
 #include <time.h> /* função time */
 #include <stdlib.h> /* função srand */
+#include <linux/limits.h> /* constantes limite */
 #include "global.h" /* constantes e funções globais */
 #include "arguments.h" /* funções para tratar argumentos */
 #include "randomize.h" /* funções para randomização de números */
@@ -56,7 +56,6 @@
 #define DEFAULT_QUANTITY_OF_SORTS (1000)
 #define DEFAULT_MAX_NUMBER (999999)
 #define DEFAULT_MIN_NUMBER (-99999)
-#define FILENAME_LIMIT (101)
 
 
 /* retornará ZERO se for executado com sucesso e ERROR caso seja interrompido por
@@ -67,11 +66,17 @@ int main (int args_count, char *args[]) {
 	FILE *r_file;
 	
 	/* nome do arquivo de saída com os números de comparações */
-	char file_name[FILENAME_LIMIT];
+	char file_name[NAME_MAX];
 
 	/* comando que será usado para plotar o gráfico a partir do arquivo gera-
 	 * do, caso o argumento -R esteja setado */
-	char plot_command[FILENAME_LIMIT+31];
+	char plot_command[(PATH_MAX+NAME_MAX+31)];
+
+	/* servirá para chegar ao diretório do projeto, para executá-lo de forma
+	 * segura */
+	char *current_path = get_current_path();
+	char *project_path = get_project_path(args[ZERO]);
+	char path_command[PATH_MAX];
 
 	/* AVL que será comparada à árvore de busca binária */
 	binary_tree_t *avl = create_empty_binary_tree();
@@ -103,9 +108,17 @@ int main (int args_count, char *args[]) {
 	 */
 
 
+	
+
+	/* garante que o programa será executado no diretorio onde o projeto se 
+	 * encontra */	
+	sprintf (path_command, "cd %s", project_path);
+	system (path_command);
+
+
 	/* se o argumento de ajuda foi passado, exibir instruções e finalizar */
 	if (argument_is_set(args_count, args, 'h')) {
-		if (print_help(args[ZERO]) != ZERO)
+		if (print_help(args[ZERO], project_path) != ZERO)
 			return (ERROR);
 		return (ZERO);
 	}
@@ -141,7 +154,7 @@ int main (int args_count, char *args[]) {
 	 * exibe as instruções de uso e encerra o programa */
 	if (quantity_of_sorts < ZERO || quantity_of_numbers < ZERO) {
 		fprintf(stderr, "ERRO: quantidades devem ser positivas.\n\n");
-		print_help(args[ZERO]); /* exibir instruções */
+		print_help(args[ZERO], project_path); /* exibir instruções */
 		return (ERROR); /* interromper programa */
 	}
 
@@ -151,7 +164,7 @@ int main (int args_count, char *args[]) {
 	if (quantity_of_sorts>quantity_of_numbers) {
 		fprintf(stderr, "ERRO: a quantidade de números a serem sorteados nã");
 		fprintf(stderr,"o deve ultrapassar a quanti-\n\tdade de números\n\n");
-		print_help(args[ZERO]); /* exibir instruções */
+		print_help(args[ZERO], project_path); /* exibir instruções */
 		return (ERROR); /* interromper programa */
 	}
 
@@ -160,7 +173,7 @@ int main (int args_count, char *args[]) {
 	if (min_number>max_number) {
 		fprintf(stderr, "ERRO: número mínimo deve ser menor que número máxi");
 		fprintf(stderr, "mo.\n\n");
-		print_help(args[ZERO]); /* exibir instruções */
+		print_help(args[ZERO], project_path); /* exibir instruções */
 		return (ERROR); /* interromper programa */
 	}
 
@@ -251,13 +264,14 @@ int main (int args_count, char *args[]) {
 	 * quantity_of_comparisons_avl e quantity_of_comparisons_bst relacionados
 	 * com a posição de cada valor */
 	 write_r_file(quantity_of_comparisons_avl, quantity_of_comparisons_bst,
-	 				quantity_of_sorts, file_name);
+	 				quantity_of_sorts, file_name, current_path, project_path);
 
 	 /* plotar gráfico a partir do arquivo que foi escrito, caso o comando -R
 	  * esteja setado */
 	if (argument_is_set(args_count, args, 'R') != FALSE) {
 		/* comando que será usado para plotar o gráfico */
-		sprintf (plot_command, "R < $PWD/%s.R --no-save --slave", file_name);
+		sprintf (plot_command, "R < %s/%s.R  --no-save --slave",
+					current_path, file_name);
 		system (plot_command);
 	}
 
