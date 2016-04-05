@@ -6,8 +6,8 @@
 
 /* nomes de arquivos pré-definidos */
 #define DEFAULT_FILE_NAME "avl_vs_bst" /* nome padrão do arquivo de saída */
-#define HELP_FILE_NAME "help.txt" /* contém o menu de ajuda acionado por -h */
-#define R_TEMPLATE_FILE_NAME "r_template.txt" /* contém template do gráfico */
+#define HELP_FILE_NAME "help_menu" /* contém o menu de ajuda acionado por -h */
+#define R_TEMPLATE_FILE_NAME "r_template" /* contém template do gráfico */
 
 
 /* copia todos os caracteres de um arquivo para outro, retorna ERROR em caso
@@ -113,7 +113,7 @@ int write_r_file (int *quantity_of_comparisons_avl,
 	fprintf(r_file, "%d)\n", quantity_of_comparisons_bst[i]);
 	
 	/* copia as configurações do gráfico para o arquivo */
-	fprintf(r_file, "pdf('%s')\n", file_name);
+	fprintf(r_file, "pdf('%s.pdf')\n", file_name);
 	copy_file(r_file, r_template_file);
 
 
