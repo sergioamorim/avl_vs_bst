@@ -1,17 +1,19 @@
-/* uso: ./main.out [-h] [-n QUANTITY_OF_NUMBERS] [-s QUANTITY_OF_SORTS]
- *		[-a MAX_NUMBER] [-i MIN_NUMBER] [-f FILE_NAME] [-o]
- *
- * Inclui números aleatórios em duas estruturas de dados: uma AVL e uma
+/* Inclui números aleatórios em duas estruturas de dados: uma AVL e uma
  * árvore de busca binária. Depois, sorteia dentre os números incluídos,
  * números a serem buscados em ambas as estruturas. Para cada busca, o número
  * de comparações necessárias para encontrar o número é contado e servirá para
  * plotar um gráfico que relaciona a quantidade de comparações necessárias com
  * a quantidade de números buscados.
  *
+ * uso: ./main.out [-h] [-o] [-R] [-n QUANTITY_OF_NUMBERS]
+ *					[-s QUANTITY_OF_SORTS] [-a MAX_NUMBER]
+ * 					[-i MIN_NUMBER] [-f FILE_NAME]
+ *
  * argumentos opcionais:
  * -h		exibe essa mensagem de ajuda e finaliza o programa
  * -o 		forçar inserção e busca dos números em ordem (ignora argumen-
  *			tos -a e -i)
+ * -R 		plota o gráfico usando R (é necessário possuir o R instalado)
  * -n QUANTITY_OF_NUMBERS
  *		quantidade de números que serão incluídos em ambas as estruturas de
  *		dados (padrão: 1000 | obs: o número -1 não deve ser usado; deve ser
@@ -51,9 +53,10 @@
 /* valores padrão para as variáveis do programa, caso algum argumento não seja
  * setado */
 #define DEFAULT_QUANTITY_OF_NUMBERS (1000)
-#define DEFAULT_QUANTITY_OF_SORTS (500)
+#define DEFAULT_QUANTITY_OF_SORTS (1000)
 #define DEFAULT_MAX_NUMBER (999999)
 #define DEFAULT_MIN_NUMBER (-99999)
+#define FILENAME_LIMIT (101)
 
 
 /* retornará ZERO se for executado com sucesso e ERROR caso seja interrompido por
@@ -64,7 +67,11 @@ int main (int args_count, char *args[]) {
 	FILE *r_file;
 	
 	/* nome do arquivo de saída com os números de comparações */
-	char file_name[101];
+	char file_name[FILENAME_LIMIT];
+
+	/* comando que será usado para plotar o gráfico a partir do arquivo gera-
+	 * do, caso o argumento -R esteja setado */
+	char plot_command[FILENAME_LIMIT+31];
 
 	/* AVL que será comparada à árvore de busca binária */
 	binary_tree_t *avl = create_empty_binary_tree();
@@ -129,6 +136,7 @@ int main (int args_count, char *args[]) {
 		strcpy(file_name, DEFAULT_FILE_NAME);
 	}
 
+
 	/* se alguma das quantidades for negativa, exibe uma mensagem de erro,
 	 * exibe as instruções de uso e encerra o programa */
 	if (quantity_of_sorts < ZERO || quantity_of_numbers < ZERO) {
@@ -166,16 +174,16 @@ int main (int args_count, char *args[]) {
 
 	/* array que receberá os números aleatórios para sortear depois*/	
 	int numbers_array[quantity_of_numbers];
-	/* guarda os números aleatórios nas duas estruturas */
+	/* guarda os números aleatórios nas duas estruturas (e no array) */
 	for (i = ZERO; i < quantity_of_numbers; i++) {
 		switch (force_order){
 			case FALSE:
 				sorted_number = random_integer(min_number, max_number);
+				numbers_array[i] = sorted_number; /* para sortear depois */
 				break;
 			case TRUE:
 				sorted_number = i;
 		}
-		numbers_array[i] = sorted_number; /* guarda para sortear depois */
 		
 		/* inserir o número sorteado na AVL */
 		avl = insert_on_binary_tree(avl, sorted_number);
@@ -244,6 +252,14 @@ int main (int args_count, char *args[]) {
 	 * com a posição de cada valor */
 	 write_r_file(quantity_of_comparisons_avl, quantity_of_comparisons_bst,
 	 				quantity_of_sorts, file_name);
+
+	 /* plotar gráfico a partir do arquivo que foi escrito, caso o comando -R
+	  * esteja setado */
+	if (argument_is_set(args_count, args, 'R') != FALSE) {
+		/* comando que será usado para plotar o gráfico */
+		sprintf (plot_command, "R < $PWD/%s.R --no-save --slave", file_name);
+		system (plot_command);
+	}
 
 	return (ZERO); /* programa executado coma sucesso */
 
