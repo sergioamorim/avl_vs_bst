@@ -1,7 +1,7 @@
 /* Funções e constantes relacionadas à leitura e escrita de arquivos */
 
-
 #include <stdio.h> /* fopen, fprintf, fclose ... */
+#include "global.h" /*  */
 
 
 /* nomes de arquivos pré-definidos */
@@ -25,6 +25,9 @@ int write_r_file (int *quantity_of_comparisons_avl,
 					int *quantity_of_comparisons_bst,
 	 				int quantity_of_sorts, char *r_file_name);
 
+/* recebe o argumento (string) na posição ZERO do programa e retorna o caminho
+ * para o diretório onde o projeto se encontra */
+char *get_project_path(char *args_zero);
 
 /* copia todos os caracteres de um arquivo para outro, retorna ERROR em caso
  * de falha e ZERO se executado com sucesso */
@@ -121,4 +124,26 @@ int write_r_file (int *quantity_of_comparisons_avl,
 	fclose(r_file); /* fechar arquivo escrito */
 
 	return (ZERO); /* a função foi executada com sucesso */
+}
+
+
+/* recebe o argumento (string) na posição ZERO do programa e retorna o caminho
+ * para o diretório onde o projeto se encontra */
+char *get_project_path(char *args_zero) {
+	int last_slash_index = 0;
+	/* procura o índice da última ocorrência de uma / no array */
+	for (i = 0; args_zero[i] != NULL_CHAR; i++) {
+		if (args_zero[i] == '/') {
+			last_slash_index = i;
+		}
+	}
+
+	/* faz uma cópia do array até a última / */
+	char project_path[(last_slash_index+2)];
+	for (i = 0; i <= last_slash_index; i++){
+		project_path[i] = args_zero[i];
+	}
+	project_path[i] = NULL_CHAR;
+
+	return (project_path); /* retorna o array criado */
 }
