@@ -1,4 +1,4 @@
- [-h] [-o] [-n QUANTITY_OF_NUMBERS] [-s QUANTITY_OF_SORTS]
+ [-h] [-o] [-R] [-n QUANTITY_OF_NUMBERS] [-s QUANTITY_OF_SORTS]
 		[-a MAX_NUMBER] [-i MIN_NUMBER] [-f FILE_NAME]
 
 Inclui números aleatórios em duas estruturas de dados: uma AVL e uma árvore de
@@ -13,6 +13,8 @@ argumentos opcionais:
   -h		exibe essa mensagem de ajuda e finaliza o programa
   -o		força a inserção de números em ordem (ignora argumentos -a e
 		-i)
+  -R 		plota o gráfico a partir do arquivo de saída usando R (é neces-
+  		sário possuir o R instalado)
   -n QUANTITY_OF_NUMBERS
 		quantidade de números que serão incluídos em ambas as estrutu-
 		ras de dados (padrão: 1000 |obs: o número -1 não deve ser usa-
