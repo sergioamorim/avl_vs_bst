@@ -15,7 +15,7 @@ Este programa inclui números aleatórios em duas estruturas de dados: uma AVL e
 
 
 
-#####Instruções de uso:
+####Instruções de uso:
 1. Compilar o arquivo main.c;
 2. Rodar com o argumento **_-h_** para obter instruções;
 3. Não usar o número -1 como valor de nenhum argumento do programa;
@@ -43,7 +43,11 @@ quantidade de números a serem sorteados para serem buscados em ambas as estrutu
 
 Caso não haja valores para os argumentos **-n**, **-s**, **-a**, **-i** e **-f** ou eles não estiverem setados, o valor padrão será utilizado.
 
+<<<<<<< HEAD
+####Arquivos:
+=======
 #####Arquivos:
+>>>>>>> 0ff0b2ce978a9f809781933f132590cdf2844071
 **arguments.h**: Funções e constantes relacionadas à manipulação de argumentos;
 
 **compile\_and\_run.sh**: script para agilizar a compilação e executar o programa;
@@ -66,7 +70,11 @@ Caso não haja valores para os argumentos **-n**, **-s**, **-a**, **-i** e **-f*
 
 
 
+<<<<<<< HEAD
+####Observações:
+=======
 #####Observações:
+>>>>>>> 0ff0b2ce978a9f809781933f132590cdf2844071
 
 O programa gerará um arquivo .R que pode ser usado para plotar um gráfico que relaciona o crescimento número de comparações necessárias ao realizar buscas nos dois tipos de árvores (AVL e BST) com o número de buscas realizado.
 
