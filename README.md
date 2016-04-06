@@ -6,7 +6,8 @@ Este programa faz parte de um projeto de Estrutura de Dados do período 2015.2 n
 Professor responsável: Márcio Ribeiro [http://ic.ufal.br/marcio]
 
 Membros da equipe:
-+ Sergio A. T. Amorim <sata@ic.ufal.br>
++ Bharbara Correia Costa Coutinho Pereira <bharbara.costa@hotmail.com>
++ Sergio Augusto Teixeira Amorim <sata@ic.ufal.br>
 
 Trello do projeto: https://trello.com/b/ABXiNDng
 
