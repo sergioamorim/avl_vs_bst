@@ -20,7 +20,8 @@ Este programa inclui números aleatórios em duas estruturas de dados: uma AVL e
 2. Rodar com o argumento **_-h_** para obter instruções;
 3. Não usar o número -1 como valor de nenhum argumento do programa;
 4. O arquivo `self_unitary_tests.c` possui testes unitários para as funções mais importantes do programa - caso modifique alguma dessas funções, compile esse algoritmo e execute-o para certificar-se do correto funcionamento dessas funções; Os argumentos `-n17 -s 17 -tuj17v p17` devem ser usados para testar as funções de recebimento de parâmetros;
-5. Para facilitar a execução dos códigos durante a codificação, o script compile\_and\_run.sh pode ser usado para compilar e rodar o programa; estando no diretório do programa, basta usar `chmod +x compile_and_run.sh` para adicionar permissão de execução para o arquivo e depois executá-lo com `./compile_and_run.sh`; É possível utilizar o script passando argumentos, que serão repassados para o programa na hora de rodar - ex.: `./compile_and_run.sh -o -R`.
+5. Para facilitar a execução dos códigos durante a codificação, o script compile\_and\_run.sh pode ser usado para compilar e rodar o programa; estando no diretório do programa, basta usar `chmod +x compile_and_run.sh` para adicionar permissão de execução para o arquivo e depois executá-lo com `./compile_and_run.sh`; É possível utilizar o script passando argumentos, que serão repassados para o programa na hora de rodar - ex.: `./compile_and_run.sh -o -R`;
+6. Este programa foi projetado para funcionar em sistemas Linux, recomenda-se que o BASH esteja instalado.
 
 ######Argumentos opcionais:
 **_-h_**: exibe uma mensagem de ajuda e finaliza o programa;
