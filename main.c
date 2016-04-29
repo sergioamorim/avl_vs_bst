@@ -58,8 +58,8 @@
 #define DEFAULT_MIN_NUMBER (-99999)
 
 
-/* retornará ZERO se for executado com sucesso e ERROR caso seja interrompido por
- * alguma falha */
+/* retornará ZERO se for executado com sucesso e ERROR caso seja interrompido
+ * por alguma falha */
 int main (int args_count, char *args[]) {
 	
 	/* arquivo R que guardará o número de comparações */
@@ -275,6 +275,12 @@ int main (int args_count, char *args[]) {
 		system (plot_command);
 	}
 
+	/* libera a memória alocada pelo programa */
+	free(project_path);
+	free(current_path);
+	free_binary_tree(bst);
+	free_binary_tree(avl);
+	
 	return (ZERO); /* programa executado coma sucesso */
 
 }
