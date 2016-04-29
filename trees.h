@@ -40,6 +40,9 @@ binary_tree_t *create_binary_tree(int);
 /* retorna TRUE se o nó recebido estiver vazio ou FALSE caso contrário */
 int is_empty_binary_tree(binary_tree_t *);
 
+/* libera a memória ocupada por todos os nós de uma árvore binária */
+void free_binary_tree(binary_tree_t *);
+
 /* retorna a árvore binária recebida balanceada de forma a ser uma AVL */
 binary_tree_t *balance_binary_tree(binary_tree_t *);
 
@@ -197,6 +200,15 @@ binary_tree_t *create_binary_tree(int value) {
 /* retorna TRUE se o nó recebido estiver vazio ou FALSE caso contrário */
 int is_empty_binary_tree(binary_tree_t *binary_tree) {
 	return (binary_tree == NULL); /* retorna se o nó aponta para NULL ou não*/
+}
+
+/* libera a memória ocupada por todos os nós de uma árvore binária */
+void free_binary_tree(binary_tree_t *node) {
+	if (node != NULL) {
+		free_binary_tree(node->left);
+		free_binary_tree(node->right);
+		free(node);
+	}
 }
 
 /* retorna a árvore binária recebida balanceada de forma a ser uma AVL */
