@@ -192,7 +192,7 @@ void test_rotate_left(void) {
     binary_tree = rotate_left(binary_tree);
     /* rotacionando uma árvore com dois nós enfileirados à direita deve trans-
      * formá-la em uma AVL */
-    CU_ASSERT(is_avl(binary_tree));
+    CU_ASSERT(is_avl(binary_tree) == TRUE);
 
     free_binary_tree(binary_tree); /* libera a memória alocada */
 }
@@ -208,7 +208,7 @@ void test_rotate_right(void) {
 
     /* rotacionando uma árvore com dois nós enfileirados à esquerda deve
      * transformá-la em uma AVL */
-    CU_ASSERT(is_avl(binary_tree));
+    CU_ASSERT(is_avl(binary_tree) == TRUE);
 
     free_binary_tree(binary_tree); /* libera a memória alocada */
 }
