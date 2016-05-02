@@ -1,48 +1,68 @@
+/* Este programa realiza testes unitários nas funções importantes do projeto 
+ * compilar e rodar para obter informações sobre o correto funcionamento das
+ * funções. É necessário possuir o CUnit instalado e compilar passando o argu-
+ * mento -lcunit.
+ */
+
 #include <stdio.h>
 #include "randomize.h" /* biblioteca de funções de randomização */
 #include "trees.h" /* biblioteca com estrutura e funções de BST e AVL */
 #include "global.h" /* definição de constantes globais para o projeto */
-#include <CUnit/CUnit.h>
-#include <CUnit/Basic.h>
+#include <CUnit/CUnit.h> /* CUnit Testing Framework */
+#include <CUnit/Basic.h> /* interface básica do CUnit */
 
 
 #define TESTING_NUMBER (17) /* inteiro usado para testar funções */
 #define MIN_ARRAY_SIZE (1) /* tamanho mínimo para um array */
 
 
-/* Funções da biblioteca randomize.h */
+/******************** Funções da biblioteca randomize.h **********************/
+
 void test_random_integer(void); /* testa a função random_integer */
 void test_sort_a_number(void); /* testa a função sort_a_number */
 
-/* Funções da biblioteca trees.h */
-void test_create_empty_binary_tree(void); /* testa a função create_empty_bin... */
-void test_height_of_binary_tree(void); /* testa a função height_of_binary_tree */
+/* ************************************************************************* */
+
+
+/* ***************** Funções da biblioteca trees.h ************************* */
+
+/* testa a função create_empty_bin... */
+void test_create_empty_binary_tree(void);
+
+/* testa a função height_of_binary_tree */
+void test_height_of_binary_tree(void);
+
 void test_is_avl(void); /* testa a função is_avl */
 void test_rotate_left(void); /* testa a função rotate_left */
 void test_rotate_right(void); /* testa a função rotate_right */
-void test_balance_factor_of_tree(void); /* testa a função balance_factor_of_... */
-void test_insert_on_binary_tree(void); /* testa a função insert_on_binary_tree */
+
+/* testa a função balance_factor_of_... */
+void test_balance_factor_of_tree(void);
+
+/* testa a função insert_on_binary_tree */
+void test_insert_on_binary_tree(void);
+
 void test_create_binary_tree(void); /* testa a função create_binary_tree */
 void test_is_empty_binary_tree(void); /* testa a função is_empty_binary_tree */
 void test_balance_binary_tree(void); /* testa a função balance_binary_tree */
-void test_search_on_binary_tree(void); /* testa a função search_on_binary_tree */
+
+/* testa a função search_on_binary_tree */
+void test_search_on_binary_tree(void);
+
+/* ************************************************************************* */
 
 
-
-/* Para cada função testada o prograva deve exibir o nome da função e OK se
- * ela passar no teste ou FAIL caso o resultado não seja o esperado.
- * PARA TESTAR AS FUNÇÕES DE MANIPULAÇÃO DE AGUMENTOS É NECESSÁRIO INICIAR
- * COM OS PARÂMETROS -n17 -s 17 -tuj17v p17
- */
 int main(void) {
 	
 	CU_pSuite avb_suite = NULL;
 
+    /* inicializando CUnit */
 	if (CU_initialize_registry() != CUE_SUCCESS){
 		fprintf(stderr, "Não foi possível inicializar o CUnit.\n");
 		return (CU_get_error());
 	}
 
+    /* criar suite para os testes de funções do programa AVL vs BST */
 	avb_suite = CU_add_suite("AVL vs BST suite", NULL, NULL);
 	if (avb_suite == NULL) {
 		CU_cleanup_registry();
@@ -51,6 +71,7 @@ int main(void) {
 		return (CU_get_error());
 	}
 
+    /* adicionando testes à suite */
 	if ((CU_add_test(avb_suite, "test of random_integer()", test_random_integer) == NULL)
 		|| (CU_add_test(avb_suite, "test of sort_a_number()", test_sort_a_number) == NULL)
 		|| (CU_add_test(avb_suite, "test of create_empty_binary_tree()", test_create_empty_binary_tree) == NULL)
@@ -66,12 +87,16 @@ int main(void) {
 		|| (CU_add_test(avb_suite, "test of search_on_binary_tree()", test_search_on_binary_tree) == NULL))
 	{
 		CU_cleanup_registry();
-		fprintf(stderr, "Não foi possível adicionar um teste à suite avb_suite.\n");
+		fprintf(stderr, "Não foi possível adicionar um teste à suite");
+        fprintf(stderr, "avb_suite.\n");
 		return (CU_get_error());
 	}
+
+    /* rodando testes com a interface básica */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
 	CU_basic_run_tests();
 	CU_cleanup_registry();
+
 	return (CU_get_error());
 }
 
@@ -80,12 +105,12 @@ int main(void) {
 void test_random_integer(void) {
     /* se o número máximo e mínimo forem iguais, deve haver garantia de que o
      * número retornado seja igual aos outros dois */
-    CU_ASSERT(random_integer(TESTING_NUMBER, TESTING_NUMBER) == TESTING_NUMBER);
+    CU_ASSERT(random_integer(TESTING_NUMBER, TESTING_NUMBER) 
+                == TESTING_NUMBER);
 }
 
 
-/* testa a função sort_a_number esteja funcionando corretamente 
- * e FALSE caso contrário. */
+/* testa a função sort_a_number usnaod CUnit */
 void test_sort_a_number(void) {
     int array[MIN_ARRAY_SIZE];
     array[ZERO] = TESTING_NUMBER;
@@ -101,7 +126,7 @@ void test_create_empty_binary_tree(void) {
 
     CU_ASSERT(binary_tree == NULL); /* binary_tree *deve* ser NULL */
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 }
 
 
@@ -125,7 +150,7 @@ void test_height_of_binary_tree(void) {
     /* se há dois elementos enfileirados, a altura é 2 */
     CU_ASSERT(height_of_binary_tree(binary_tree) == 2);
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 }
 
 
@@ -153,7 +178,7 @@ void test_is_avl(void) {
     /* dois elementos à esquerda e um à direita: a árvore é uma AVL */
     CU_ASSERT(is_avl(binary_tree) == TRUE);
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 }
 
 
@@ -169,7 +194,7 @@ void test_rotate_left(void) {
      * formá-la em uma AVL */
     CU_ASSERT(is_avl(binary_tree));
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 }
 
 
@@ -185,7 +210,7 @@ void test_rotate_right(void) {
      * transformá-la em uma AVL */
     CU_ASSERT(is_avl(binary_tree));
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 }
 
 
@@ -227,7 +252,7 @@ void test_balance_factor_of_tree(void) {
      * lanceamento é 2 */
     CU_ASSERT(balance_factor_of_tree(binary_tree) == 2);
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 
 }
 
@@ -262,7 +287,7 @@ void test_insert_on_binary_tree(void) {
      * mesmo */
     CU_ASSERT(binary_tree->value == TESTING_NUMBER);
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 }
 
 
@@ -280,7 +305,7 @@ void test_create_binary_tree(void) {
     /* o número passado como argumento na função deve pertencer à arvore */
     CU_ASSERT(search_on_binary_tree(binary_tree, TESTING_NUMBER) == 1);
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 
 }
 
@@ -297,7 +322,7 @@ void test_is_empty_binary_tree(void) {
     /* com um nó, a árvore não está vazia */
     CU_ASSERT(is_empty_binary_tree(binary_tree) == FALSE);
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 }
 
 
@@ -343,7 +368,7 @@ void test_balance_binary_tree(void) {
      * foi balanceada */
     CU_ASSERT(is_avl(binary_tree) == TRUE);
 
-    free_binary_tree(binary_tree);
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 }
 
 
@@ -377,5 +402,5 @@ void test_search_on_binary_tree(void) {
     CU_ASSERT(search_on_binary_tree(binary_tree, (ZERO))
         == height_of_binary_tree(binary_tree))
 
-    free_binary_tree(binary_tree);    
+    free_binary_tree(binary_tree); /* libera a memória alocada */
 }
