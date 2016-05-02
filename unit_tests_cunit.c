@@ -3,7 +3,7 @@
 #include "trees.h" /* biblioteca com estrutura e funções de BST e AVL */
 #include "global.h" /* definição de constantes globais para o projeto */
 #include <CUnit/CUnit.h>
-#include <CUnit/Console.h>
+#include <CUnit/Basic.h>
 
 
 #define TESTING_NUMBER (17) /* inteiro usado para testar funções */
@@ -51,26 +51,26 @@ int main(void) {
 		return (CU_get_error());
 	}
 
-	if ((CU_add_test(avb_suite, "Test of random_integer()", test_random_integer) == NULL)
-		|| (CU_add_test(avb_suite, "Test of sort_a_number()", test_sort_a_number) == NULL)
-		|| (CU_add_test(avb_suite, "Test of create_empty_binary_tree()", test_create_empty_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "Test of height_of_binary_tree()", test_height_of_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "Test of is_avl()", test_is_avl) == NULL)
-		|| (CU_add_test(avb_suite, "Test of rotate_left()", test_rotate_left) == NULL)
-		|| (CU_add_test(avb_suite, "Test of rotate_right()", test_rotate_right) == NULL)
-		|| (CU_add_test(avb_suite, "Test of balance_factor_of_tree()", test_balance_factor_of_tree) == NULL)
-		|| (CU_add_test(avb_suite, "Test of insert_on_binary_tree()", test_insert_on_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "Test of create_binary_tree()", test_create_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "Test of is_empty_binary_tree()", test_is_empty_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "Test of balance_binary_tree()", test_balance_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "Test of search_on_binary_tree()", test_search_on_binary_tree) == NULL))
+	if ((CU_add_test(avb_suite, "test of random_integer()", test_random_integer) == NULL)
+		|| (CU_add_test(avb_suite, "test of sort_a_number()", test_sort_a_number) == NULL)
+		|| (CU_add_test(avb_suite, "test of create_empty_binary_tree()", test_create_empty_binary_tree) == NULL)
+		|| (CU_add_test(avb_suite, "test of height_of_binary_tree()", test_height_of_binary_tree) == NULL)
+		|| (CU_add_test(avb_suite, "test of is_avl()", test_is_avl) == NULL)
+		|| (CU_add_test(avb_suite, "test of rotate_left()", test_rotate_left) == NULL)
+		|| (CU_add_test(avb_suite, "test of rotate_right()", test_rotate_right) == NULL)
+		|| (CU_add_test(avb_suite, "test of balance_factor_of_tree()", test_balance_factor_of_tree) == NULL)
+		|| (CU_add_test(avb_suite, "test of insert_on_binary_tree()", test_insert_on_binary_tree) == NULL)
+		|| (CU_add_test(avb_suite, "test of create_binary_tree()", test_create_binary_tree) == NULL)
+		|| (CU_add_test(avb_suite, "test of is_empty_binary_tree()", test_is_empty_binary_tree) == NULL)
+		|| (CU_add_test(avb_suite, "test of balance_binary_tree()", test_balance_binary_tree) == NULL)
+		|| (CU_add_test(avb_suite, "test of search_on_binary_tree()", test_search_on_binary_tree) == NULL))
 	{
 		CU_cleanup_registry();
 		fprintf(stderr, "Não foi possível adicionar um teste à suite avb_suite.\n");
 		return (CU_get_error());
 	}
-
-	CU_console_run_tests();
+	CU_basic_set_mode(CU_BRM_VERBOSE);
+	CU_basic_run_tests();
 	CU_cleanup_registry();
 	return (CU_get_error());
 }
@@ -100,6 +100,8 @@ void test_create_empty_binary_tree(void) {
     binary_tree = create_empty_binary_tree();
 
     CU_ASSERT(binary_tree == NULL); /* binary_tree *deve* ser NULL */
+
+    free_binary_tree(binary_tree);
 }
 
 
@@ -123,6 +125,7 @@ void test_height_of_binary_tree(void) {
     /* se há dois elementos enfileirados, a altura é 2 */
     CU_ASSERT(height_of_binary_tree(binary_tree) == 2);
 
+    free_binary_tree(binary_tree);
 }
 
 
@@ -150,6 +153,7 @@ void test_is_avl(void) {
     /* dois elementos à esquerda e um à direita: a árvore é uma AVL */
     CU_ASSERT(is_avl(binary_tree) == TRUE);
 
+    free_binary_tree(binary_tree);
 }
 
 
@@ -164,6 +168,8 @@ void test_rotate_left(void) {
     /* rotacionando uma árvore com dois nós enfileirados à direita deve trans-
      * formá-la em uma AVL */
     CU_ASSERT(is_avl(binary_tree));
+
+    free_binary_tree(binary_tree);
 }
 
 
@@ -179,6 +185,7 @@ void test_rotate_right(void) {
      * transformá-la em uma AVL */
     CU_ASSERT(is_avl(binary_tree));
 
+    free_binary_tree(binary_tree);
 }
 
 
@@ -209,7 +216,7 @@ void test_balance_factor_of_tree(void) {
      * de balanceamento é ZERO */
     CU_ASSERT(balance_factor_of_tree(binary_tree) == ZERO);
 
-    free (binary_tree);
+    free_binary_tree(binary_tree);
     binary_tree = create_binary_tree(TESTING_NUMBER);
     binary_tree = insert_on_binary_tree(binary_tree, (TESTING_NUMBER - 1));
     /* com um nó à esquerda e nenhum à direita, o fator de balanceamento é 1*/
@@ -220,6 +227,7 @@ void test_balance_factor_of_tree(void) {
      * lanceamento é 2 */
     CU_ASSERT(balance_factor_of_tree(binary_tree) == 2);
 
+    free_binary_tree(binary_tree);
 
 }
 
@@ -254,7 +262,7 @@ void test_insert_on_binary_tree(void) {
      * mesmo */
     CU_ASSERT(binary_tree->value == TESTING_NUMBER);
 
-
+    free_binary_tree(binary_tree);
 }
 
 
@@ -272,6 +280,7 @@ void test_create_binary_tree(void) {
     /* o número passado como argumento na função deve pertencer à arvore */
     CU_ASSERT(search_on_binary_tree(binary_tree, TESTING_NUMBER) == 1);
 
+    free_binary_tree(binary_tree);
 
 }
 
@@ -288,6 +297,7 @@ void test_is_empty_binary_tree(void) {
     /* com um nó, a árvore não está vazia */
     CU_ASSERT(is_empty_binary_tree(binary_tree) == FALSE);
 
+    free_binary_tree(binary_tree);
 }
 
 
@@ -302,7 +312,7 @@ void test_balance_binary_tree(void) {
     /* dois nós inseridos à esquerda no esquema right-left e depois a árvore
      * foi balanceada */
     CU_ASSERT(is_avl(binary_tree) == TRUE);
-    free(binary_tree);
+    free_binary_tree(binary_tree);
 
     binary_tree = create_binary_tree(TESTING_NUMBER);
     binary_tree = insert_on_binary_tree(binary_tree, (TESTING_NUMBER - 2));
@@ -312,7 +322,7 @@ void test_balance_binary_tree(void) {
     /* dois nós inseridos à esquerda no esquema left-right e depois a árvore
      * foi balanceada */
     CU_ASSERT(is_avl(binary_tree) == TRUE);
-    free(binary_tree);
+    free_binary_tree(binary_tree);
 
     binary_tree = create_binary_tree(TESTING_NUMBER);
     binary_tree = insert_on_binary_tree(binary_tree, (TESTING_NUMBER + 1));
@@ -322,7 +332,7 @@ void test_balance_binary_tree(void) {
     /* dois nós inseridos à esquerda no esquema right-right e depois a árvore
      * foi balanceada */
     CU_ASSERT(is_avl(binary_tree) == TRUE);
-    free(binary_tree);
+    free_binary_tree(binary_tree);
 
     binary_tree = create_binary_tree(TESTING_NUMBER);
     binary_tree = insert_on_binary_tree(binary_tree, (TESTING_NUMBER - 1));
@@ -333,6 +343,7 @@ void test_balance_binary_tree(void) {
      * foi balanceada */
     CU_ASSERT(is_avl(binary_tree) == TRUE);
 
+    free_binary_tree(binary_tree);
 }
 
 
@@ -365,5 +376,6 @@ void test_search_on_binary_tree(void) {
      * a altura da árvore */    
     CU_ASSERT(search_on_binary_tree(binary_tree, (ZERO))
         == height_of_binary_tree(binary_tree))
-    
+
+    free_binary_tree(binary_tree);    
 }
