@@ -20,7 +20,7 @@ Este programa inclui números aleatórios em duas estruturas de dados: uma AVL e
 1. Compilar o arquivo main.c;
 2. Rodar com o argumento **_-h_** para obter instruções;
 3. Não usar o número -1 como valor de nenhum argumento do programa;
-4. O arquivo `unit_tests.c` possui testes unitários para as funções mais importantes do programa - caso modifique alguma dessas funções, compile esse algoritmo e execute-o para certificar-se do correto funcionamento dessas funções; Os argumentos `-n17 -s 17 -tuj17v p17` devem ser usados para testar as funções de recebimento de parâmetros;
+4. O arquivo `unit_tests.c` possui testes unitários para as funções mais importantes do programa - caso modifique alguma dessas funções, compile esse algoritmo e execute-o para certificar-se do correto funcionamento dessas funções; É necessário possuir CUnit instalado e compilar usando o argumento `-lcunit`;
 5. Para facilitar a execução dos códigos durante a codificação, o script compile\_and\_run.sh pode ser usado para compilar e rodar o programa; estando no diretório do programa, basta usar `chmod +x compile_and_run.sh` para adicionar permissão de execução para o arquivo e depois executá-lo com `./compile_and_run.sh`; É possível utilizar o script passando argumentos, que serão repassados para o programa na hora de rodar - ex.: `./compile_and_run.sh -o -R`;
 6. Este programa foi projetado para funcionar em sistemas Linux, recomenda-se que o BASH esteja instalado.
 
@@ -64,7 +64,7 @@ Caso não haja valores para os argumentos **-n**, **-s**, **-a**, **-i** e **-f*
 
 **randomize.h**: Funções relativas à randomização de números;
 
-**unit\_tests.c**: realiza testes unitários nas funções importantes do projeto - compilar e rodar para obter informações sobre o correto funcionamento das funções; Os argumentos `-n17 -s 17 -tuj17v p17` devem ser usados para testar as funções de recebimento de parâmetros;
+**unit\_tests.c**: realiza testes unitários nas funções mais importantes do programa - caso modifique alguma dessas funções, compile esse algoritmo e execute-o para certificar-se do correto funcionamento dessas funções; É necessário possuir CUnit instalado e compilar usando o argumento `-lcunit`;
 
 **trees.h**: Estruturas e funções de manipulação de árvores de busca binária e AVL; Definição dos tipos abstratos de dados AVL e BST;
 
@@ -76,4 +76,4 @@ O programa gerará um arquivo .R que pode ser usado para plotar um gráfico que 
 
 As recomendações de estilo na escrita do código descritas neste documento foram seguidas a medida que não fugiam do escorpo do projeto: Recommended C Style and Coding Standards (Cannon) [https://www.doc.ic.ac.uk/lab/cplus/cstyle.html]
 
-Testado usando o GCC 5.2.1 GNU/Linux e R 3.2.2
+Testado usando o GCC 5.2.1 GNU/Linux CUnit 2.1.3 e R 3.2.2
