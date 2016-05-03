@@ -38,3 +38,7 @@
 *.o
 *.R
 *.pdf
+
+# Eclipse files
+.cproject
+.project
