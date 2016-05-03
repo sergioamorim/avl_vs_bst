@@ -43,18 +43,19 @@ void test_balance_factor_of_tree(void);
 void test_insert_on_binary_tree(void);
 
 void test_create_binary_tree(void); /* testa a função create_binary_tree */
-void test_is_empty_binary_tree(void); /* testa a função is_empty_binary_tree */
+void test_is_empty_binary_tree(void); /* testa a função is_empty_binary_tree*/
 void test_balance_binary_tree(void); /* testa a função balance_binary_tree */
 
 /* testa a função search_on_binary_tree */
 void test_search_on_binary_tree(void);
 
-/* ************************************************************************* */
+/* ************************************************************************ */
 
 
 int main(void) {
 	
-	CU_pSuite avb_suite = NULL;
+	CU_pSuite avl_suite = NULL;
+	CU_pSuite randomize_suite = NULL;
 
     /* inicializando CUnit */
 	if (CU_initialize_registry() != CUE_SUCCESS){
@@ -63,32 +64,40 @@ int main(void) {
 	}
 
     /* criar suite para os testes de funções do programa AVL vs BST */
-	avb_suite = CU_add_suite("AVL vs BST suite", NULL, NULL);
-	if (avb_suite == NULL) {
+	avl_suite = CU_add_suite("AVL suite", NULL, NULL);
+	if (avl_suite == NULL) {
 		CU_cleanup_registry();
-		fprintf(stderr, "Não foi possível adicionar uma suite de testes ao ");
-		fprintf(stderr, "CUnit.\n");
+		fprintf(stderr, "Não foi possível adicionar a suite de testes AVL ");
+		fprintf(stderr, "suite ao CUnit.\n");
 		return (CU_get_error());
 	}
 
-    /* adicionando testes à suite */
-	if ((CU_add_test(avb_suite, "test of random_integer()", test_random_integer) == NULL)
-		|| (CU_add_test(avb_suite, "test of sort_a_number()", test_sort_a_number) == NULL)
-		|| (CU_add_test(avb_suite, "test of create_empty_binary_tree()", test_create_empty_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "test of height_of_binary_tree()", test_height_of_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "test of is_avl()", test_is_avl) == NULL)
-		|| (CU_add_test(avb_suite, "test of rotate_left()", test_rotate_left) == NULL)
-		|| (CU_add_test(avb_suite, "test of rotate_right()", test_rotate_right) == NULL)
-		|| (CU_add_test(avb_suite, "test of balance_factor_of_tree()", test_balance_factor_of_tree) == NULL)
-		|| (CU_add_test(avb_suite, "test of insert_on_binary_tree()", test_insert_on_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "test of create_binary_tree()", test_create_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "test of is_empty_binary_tree()", test_is_empty_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "test of balance_binary_tree()", test_balance_binary_tree) == NULL)
-		|| (CU_add_test(avb_suite, "test of search_on_binary_tree()", test_search_on_binary_tree) == NULL))
+	/* criar suite para os testes de funções do programa AVL vs BST */
+	randomize_suite = CU_add_suite("Randomize suite", NULL, NULL);
+	if (avl_suite == NULL) {
+		CU_cleanup_registry();
+		fprintf(stderr, "Não foi possível adicionar a suite de testes ");
+		fprintf(stderr, "Randomize suite ao CUnit.\n");
+		return (CU_get_error());
+	}
+
+    /* adicionando testes às suites */
+	if ((CU_add_test(randomize_suite, "test of random_integer()", test_random_integer) == NULL)
+		|| (CU_add_test(randomize_suite, "test of sort_a_number()", test_sort_a_number) == NULL)
+		|| (CU_add_test(avl_suite, "test of create_empty_binary_tree()", test_create_empty_binary_tree) == NULL)
+		|| (CU_add_test(avl_suite, "test of height_of_binary_tree()", test_height_of_binary_tree) == NULL)
+		|| (CU_add_test(avl_suite, "test of is_avl()", test_is_avl) == NULL)
+		|| (CU_add_test(avl_suite, "test of rotate_left()", test_rotate_left) == NULL)
+		|| (CU_add_test(avl_suite, "test of rotate_right()", test_rotate_right) == NULL)
+		|| (CU_add_test(avl_suite, "test of balance_factor_of_tree()", test_balance_factor_of_tree) == NULL)
+		|| (CU_add_test(avl_suite, "test of insert_on_binary_tree()", test_insert_on_binary_tree) == NULL)
+		|| (CU_add_test(avl_suite, "test of create_binary_tree()", test_create_binary_tree) == NULL)
+		|| (CU_add_test(avl_suite, "test of is_empty_binary_tree()", test_is_empty_binary_tree) == NULL)
+		|| (CU_add_test(avl_suite, "test of balance_binary_tree()", test_balance_binary_tree) == NULL)
+		|| (CU_add_test(avl_suite, "test of search_on_binary_tree()", test_search_on_binary_tree) == NULL))
 	{
 		CU_cleanup_registry();
-		fprintf(stderr, "Não foi possível adicionar um teste à suite");
-        fprintf(stderr, "avb_suite.\n");
+		fprintf(stderr, "Não foi possível adicionar um teste a uma suite.");
 		return (CU_get_error());
 	}
 
