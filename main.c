@@ -179,9 +179,9 @@ int main (int args_count, char *args[]) {
 
 	
 	
-	/* fazer com que a função de randomização gere números diferentes a cada vez
-	 * que o programa roda | atualizar o parâmetro da função de acordo com o
-	 * tempo */
+	/* fazer com que a função de randomização gere números diferentes a cada
+	 * vez que o programa roda | atualizar o parâmetro da função de acordo com
+	 * o tempo */
 	srand(time(NULL));
 
 
